@@ -1,9 +1,37 @@
 """
 Solution to Two Sum challenge. 
 """
+import math
 import unittest
 from typing import Iterable, Tuple
 
+HASH_MAP = {
+    '0': 'ze',
+    '1': 'on',
+    '2': 'tw',
+    '3': 'th',
+    '4': 'fo',
+    '5': 'fi',
+    '6': 'si',
+    '7': 'se',
+    '8': 'ei',
+    '9': 'ni'
+}
+
+def generate_hash(num):
+    divisor = 1
+    hash = ""
+
+    # positive or negative
+    if num > 0:
+        hash += 'po'
+    elif num < 0:
+        num *= -1
+        hash += 'ne'
+    else:
+        return 'ze'
+    
+    return hash+''.join(HASH_MAP[j] for j in str(num))
 
 class Solutions(object):
     @staticmethod
@@ -34,7 +62,7 @@ class Solutions(object):
         Given an iterable of integers, this method returns the index of the 2 that sum up
         to target value using a hash table.
 
-        If multiple combinations of different numbers add to the sum, only the first found combination is returned. 
+        If multiple combinations of different numbers add to the sum, only the first found combination is returned.
 
         Args:
             nums (Iterable[int]): Iterable of numbers to sum to target
@@ -43,7 +71,15 @@ class Solutions(object):
         Returns:
             Tuple[int]: Index values of the elements whose sum 
         """
-        ...
+        # create the hash map
+        hash_map = {generate_hash(nums[x]): x for x in range(len(nums))}
+        for i in range(len(nums)):
+            # we assume that x + y = target
+            x = nums[i]
+            y = target - x
+            y_hash = generate_hash(y)
+            if y_hash in hash_map and hash_map[y_hash] != i:
+                return (i, hash_map[y_hash])
 
 
 class TestSumMethods(unittest.TestCase):
@@ -54,17 +90,20 @@ class TestSumMethods(unittest.TestCase):
         self.lists = [
             [125, 163, 55, 79, 32],
             [17, 19, 23, 29, 31],
-            [59, 67, 73, 97]
+            [59, 67, 73, 97],
+            [17, 19, 23, 29, -31],
         ]
         self.targets = [
-            79+32,
+            55+79,
             19+31,
-            97+97
+            97+97,
+            29-31,
         ]
         self.expected = [
-            (3, 4),
+            (2, 3),
             (1, 4),
-            None
+            None,
+            (3, 4),
         ]
     
     def test_two_sum_double_loop(self) -> None:
@@ -87,3 +126,6 @@ class TestSumMethods(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+    # print(generate_hash(1234))
+    # print(generate_hash(0))
+    # print(generate_hash(-1234))
