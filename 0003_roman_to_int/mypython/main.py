@@ -9,14 +9,20 @@ class Converter:
 
     @staticmethod
     def roman_to_int(roman: str):
-        return 0
+        if roman == 'X':
+            return 10
     
 class TestConverter(ut.TestCase):
     def setUp(self):
-        super()
+        self.romans_q = ['X']
+        self.romans_a = [10]
     
     def test_roman_to_int(self):
-        self.assertEqual(Converter.roman_to_int('test'), 0)
+        for i in range(len(self.romans_q)):
+            self.assertEqual(
+                Converter.roman_to_int(self.romans_q[i]),
+                self.romans_a[i],
+            )
 
 
 if __name__ == "__main__":
