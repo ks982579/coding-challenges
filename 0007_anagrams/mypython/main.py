@@ -6,6 +6,25 @@ import unittest
 from sys import stdout
 
 class Anagram(object):
+    """
+    First method implemented runs through lists. It is easiest way to quickly think of solution.
+    However, perhaps counting is easier. 
+
+    In fact, with Python you can actually:
+    ```python
+    from collections import Counter
+
+    assert Counter(word_one) == Counter(word_two)
+    ```
+
+    That is a hash solution, but there's even a sorted array solution.
+
+    Args:
+        object (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     @staticmethod
     def check(word_one, word_two):
         word_one = word_one.strip().casefold()
