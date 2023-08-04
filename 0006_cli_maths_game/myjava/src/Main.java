@@ -22,3 +22,17 @@ public class Main {
         }
     }
 }
+
+class GameLoop {
+    private int shifter = 0;
+    private int start = 0;
+    private int end = 10;
+
+    public int getShifter() {
+        return shifter;
+    }
+
+    public void setShifter(int shifter) {
+        this.shifter = shifter;
+    }
+}
