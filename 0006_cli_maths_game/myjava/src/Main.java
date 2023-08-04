@@ -8,6 +8,9 @@ public class Main {
         // IntelliJ IDEA suggests fixing it.
         System.out.printf("Hello and welcome!");
         Random rand = new Random();
+
+        // Just use shifter to add or subtract values
+        int shifter = 0;
         System.out.println(rand.nextInt(10));
 
         // Press Shift+F10 or click the green arrow button in the gutter to run the code.
