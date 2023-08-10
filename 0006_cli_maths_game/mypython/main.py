@@ -8,17 +8,8 @@ from sys import exit
 from components.components import MathsGame
 
 if __name__ == "__main__":
-    print('5 + 6')
-    while True:
-        try:
-            guess = input().strip().casefold()
-            if guess == 'q':
-                exit()
-            guess = int(guess)
-            break
-        except Exception as err:
-            print('Not a valid guess. Enter a number or "q" to quit')
-            continue
+    game = MathsGame()
+    game.run_game()
 
 """
 + Get Numbers
@@ -27,4 +18,6 @@ if __name__ == "__main__":
 + Check Answer
 + Adjust game
 + Repeat
+
+dynamic method calling w/getattr(obj, attr)
 """
