@@ -41,8 +41,8 @@ class Converter:
     
 class TestConverter(ut.TestCase):
     def setUp(self):
-        self.romans_q = ['X', 'V', 'II', 'IV', 'XIX']
-        self.romans_a = [10, 5, 2, 4, 19]
+        self.romans_q = ['X', 'V', 'II', 'IV', 'XIX', "CMXCIX"] #, "IM"]
+        self.romans_a = [10, 5, 2, 4, 19, 999] #, "ERROR"]
     
     def test_roman_to_int(self):
         for i in range(len(self.romans_q)):
