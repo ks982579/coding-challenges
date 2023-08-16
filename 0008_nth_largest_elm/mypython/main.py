@@ -10,6 +10,16 @@ import unittest
 class FindLargestElement:
     @staticmethod
     def find_nth_largest(nums: array, k: int) -> int:
+        if k > len(nums):
+            raise IndexError("K > length of list.")
+        
+        values = []
+        values[0] = nums[0]
+        ind = 0
+        the_min = nums[0]
+        for i in range(len(nums)):
+            if nums[i] > the_min:
+                the_min = 0
         return 0
 
 
