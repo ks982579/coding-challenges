@@ -10,30 +10,33 @@ import unittest
 class FindLargestElement:
     @staticmethod
     def find_nth_largest(nums: array, k: int) -> int:
+        # tmp = nums[0]
+
         if k > len(nums):
             raise IndexError("K > length of list.")
         
-        values = []
-        values[0] = nums[0]
-        ind = 0
-        the_min = nums[0]
-        for i in range(len(nums)):
-            if nums[i] > the_min:
-                the_min = 0
-        return 0
+        for _ in range(k):
+            tmp = nums[0]
+            for numb in nums:
+                tmp = numb if numb > tmp else tmp
+            nums.remove(tmp) # Inplace operation
+        return tmp
 
 
 class TestFindNthLargestElement(unittest.TestCase):
     def setUp(self) -> None:
         self.trials = [
-            array('i', range(0,10))
+            array('i', range(0,10)),
+            [9,8,7,6,5],
+            [-100,100,32,64,77,9,0]
         ]
-        self.expected = [9]
+        self.expected = [9,8,64]
+        self.n_value = [1,2,3]
     
     def test_finding_nth_largest(self):
-        for trial in self.trials:
-            actual = FindLargestElement.find_nth_largest(trial, 1)
-            self.assertEqual(actual, self.expected[0])
+        for i in range(len(self.trials)):
+            actual = FindLargestElement.find_nth_largest(self.trials[i], self.n_value[i])
+            self.assertEqual(actual, self.expected[i])
 
 if __name__ == "__main__":
     print('Hello, world!')
