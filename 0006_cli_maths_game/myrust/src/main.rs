@@ -1,4 +1,5 @@
 use std::io;
+use rand;
 
 struct Answer {
     val_str: String,
@@ -8,6 +9,7 @@ struct Answer {
 // Because it mutates self, you must declare it as mutable
 impl Answer {
     fn converter(&mut self) -> () {
+        // TODO: catch non-int or it panics
         self.val_int = self.val_str.parse::<i32>().unwrap();
     }
 }
