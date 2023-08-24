@@ -26,7 +26,10 @@ fn main() {
     // Make random things
     let mut rng: ThreadRng = rand::thread_rng();
     let uniform: Uniform<i32> = Uniform::new(0, 10);
-    let num: i32 = uniform.sample(&mut rng);
+    let num_l: i32 = uniform.sample(&mut rng);
+    let num_r: i32 = uniform.sample(&mut rng);
+    let expected: i32 = num_l + num_r;
+    println!("{num_l} + {num_r} = ?");
 
 
     let thing: String = get_answer();
@@ -37,7 +40,12 @@ fn main() {
     answer.converter();
     // let thing: i32 = thing.parse::<i32>().unwrap();
 
-    println!("{:?}", &answer.val_int);
+    // println!("{:?}", &answer.val_int);
+    if answer.val_int == expected {
+        println!("Correct!")
+    } else {
+        println!("Incorrect!")
+    }
 }
 
 fn get_answer() -> String {
