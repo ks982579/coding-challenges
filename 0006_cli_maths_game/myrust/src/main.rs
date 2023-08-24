@@ -1,5 +1,12 @@
 use std::io;
-use rand;
+use rand::Rng;
+use rand::rngs::ThreadRng;
+use rand::distributions::{Distribution, Uniform};
+
+/**
+ * https://rust-random.github.io/book/
+ * 
+ *  */
 
 struct Answer {
     val_str: String,
@@ -16,6 +23,12 @@ impl Answer {
 
 fn main() {
     println!("Hello, world!");
+    // Make random things
+    let mut rng: ThreadRng = rand::thread_rng();
+    let uniform: Uniform<i32> = Uniform::new(0, 10);
+    let num: i32 = uniform.sample(&mut rng);
+
+
     let thing: String = get_answer();
     let mut answer: Answer = Answer {
         val_str: thing, // moved into here
