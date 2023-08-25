@@ -28,6 +28,12 @@ struct NumberRange {
 }
 
 impl NumberRange {
+    fn new() -> NumberRange {
+        NumberRange {
+            upper_bound: 10,
+            lower_bound: 0,
+        }
+    }
     fn increase_bounds(&mut self) -> () {
         self.upper_bound = self.upper_bound + 1;
         if (self.upper_bound - self.lower_bound) > 20 {
@@ -51,7 +57,11 @@ fn main() {
     println!("Enter any non-diget character to cause the program to panic to exit...");
     // Make random things
     let mut rng: ThreadRng = rand::thread_rng();
-    let uniform: Uniform<i32> = Uniform::new(0, 10);
+
+    let mut challenge: NumberRange = NumberRange::new();
+
+
+    let uniform: Uniform<i32> = Uniform::new(challenge.lower_bound, challenge.upper_bound);
     let num_l: i32 = uniform.sample(&mut rng);
     let num_r: i32 = uniform.sample(&mut rng);
     let expected: i32 = num_l + num_r;
