@@ -17,12 +17,38 @@ struct Answer {
 impl Answer {
     fn converter(&mut self) -> () {
         // TODO: catch non-int or it panics
+        // TODO: Trim answers...
         self.val_int = self.val_str.parse::<i32>().unwrap();
     }
 }
 
+struct NumberRange {
+    upper_bound: i32,
+    lower_bound: i32,
+}
+
+impl NumberRange {
+    fn increase_bounds(&mut self) -> () {
+        self.upper_bound = self.upper_bound + 1;
+        if (self.upper_bound - self.lower_bound) > 20 {
+            self.lower_bound = self.lower_bound + 1;
+        }
+    }
+    fn decrease_bounds(&mut self) -> () {
+        self.upper_bound = self.upper_bound - 1;
+        self.lower_bound = self.lower_bound - 1;
+        if self.upper_bound < 10 {
+            self.upper_bound = 10;
+        }
+        if self.lower_bound < 0 {
+            self.lower_bound = 0;
+        }
+    }
+}
+
 fn main() {
-    println!("Hello, world!");
+    println!("This is my maths adding game!");
+    println!("Enter any non-diget character to cause the program to panic to exit...");
     // Make random things
     let mut rng: ThreadRng = rand::thread_rng();
     let uniform: Uniform<i32> = Uniform::new(0, 10);
