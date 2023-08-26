@@ -66,6 +66,7 @@ fn main() {
     let mut challenge: NumberRange = NumberRange::new();
 
     let uniform: Uniform<i32> = Uniform::new(challenge.lower_bound, challenge.upper_bound);
+
     let num_l: i32 = uniform.sample(&mut rng);
     let num_r: i32 = uniform.sample(&mut rng);
     let expected: i32 = num_l + num_r;
@@ -108,5 +109,28 @@ fn check_answer(actual: i32, expected: i32) -> Veracity {
         return Veracity::Correct;
     } else {
         return Veracity::Incorrect;
+    }
+}
+
+fn game_logic(random_thread_range: &ThreadRng, challenge_set: &NumberRange) -> () {
+    let uniform: Uniform<i32> = Uniform::new(challenge_set.lower_bound, challenge_set.upper_bound);
+
+    let num_l: i32 = uniform.sample(&mut random_thread_range);
+    let num_r: i32 = uniform.sample(&mut random_thread_range);
+    let expected: i32 = num_l + num_r;
+    println!("{num_l} + {num_r} = ?");
+
+    let thing: String = get_answer();
+    let mut answer: Answer = Answer {
+        val_str: thing, // moved into here
+        val_int: 0,
+    };
+    answer.converter();
+    // let thing: i32 = thing.parse::<i32>().unwrap();
+    let veracity: Veracity = check_answer(answer.val_int, expected);
+
+    match veracity {
+        Veracity::Correct => println!("Correct!"),
+        Veracity::Incorrect => println!("Incorrect!"),
     }
 }
