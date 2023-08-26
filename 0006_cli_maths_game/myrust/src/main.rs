@@ -1,11 +1,11 @@
-use std::io;
-use rand::Rng;
-use rand::rngs::ThreadRng;
 use rand::distributions::{Distribution, Uniform};
+use rand::rngs::ThreadRng;
+use rand::Rng;
+use std::io;
 
 /**
  * https://rust-random.github.io/book/
- * 
+ *
  *  */
 
 struct Answer {
@@ -52,6 +52,11 @@ impl NumberRange {
     }
 }
 
+enum Veracity {
+    Correct,
+    Incorrect,
+}
+
 fn main() {
     println!("This is my maths adding game!");
     println!("Enter any non-diget character to cause the program to panic to exit...");
@@ -60,13 +65,11 @@ fn main() {
 
     let mut challenge: NumberRange = NumberRange::new();
 
-
     let uniform: Uniform<i32> = Uniform::new(challenge.lower_bound, challenge.upper_bound);
     let num_l: i32 = uniform.sample(&mut rng);
     let num_r: i32 = uniform.sample(&mut rng);
     let expected: i32 = num_l + num_r;
     println!("{num_l} + {num_r} = ?");
-
 
     let thing: String = get_answer();
     let mut answer: Answer = Answer {
@@ -75,12 +78,11 @@ fn main() {
     };
     answer.converter();
     // let thing: i32 = thing.parse::<i32>().unwrap();
+    let veracity: Veracity = check_answer(answer.val_int, expected);
 
-    // println!("{:?}", &answer.val_int);
-    if answer.val_int == expected {
-        println!("Correct!")
-    } else {
-        println!("Incorrect!")
+    match veracity {
+        Veracity::Correct => println!("Correct!"),
+        Veracity::Incorrect => println!("Incorrect!"),
     }
 }
 
@@ -98,5 +100,13 @@ fn get_answer() -> String {
             println!("Error: {error}");
             return String::from("Sorry, error in the code");
         }
+    }
+}
+
+fn check_answer(actual: i32, expected: i32) -> Veracity {
+    if actual == expected {
+        return Veracity::Correct;
+    } else {
+        return Veracity::Incorrect;
     }
 }
