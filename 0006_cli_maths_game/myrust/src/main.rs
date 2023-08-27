@@ -1,3 +1,11 @@
+/**
+ * This is a game that asks a maths question and you provide solution.
+ * It's in a loop, so you can work on those skills.
+ * TODO:
+ * [ ] - increase and decrease difficulty based on correct answers.
+ * [ ] - implement other operations other than adding.
+ * [ ] - Implement better logic
+ */
 use rand::distributions::{Distribution, Uniform};
 use rand::rngs::ThreadRng;
 use rand::Rng;
@@ -6,7 +14,7 @@ use std::io;
 /**
  * https://rust-random.github.io/book/
  *
- *  */
+ */
 
 struct Answer {
     val_str: String,
@@ -88,7 +96,7 @@ fn main() {
     }
     */
 
-    while true {
+    loop {
         game_logic(&mut rng, &mut challenge);
     }
 }
@@ -141,7 +149,13 @@ fn game_logic(random_thread_range: &mut ThreadRng, challenge_set: &mut NumberRan
     let veracity: Veracity = check_answer(answer.val_int, expected);
 
     match veracity {
-        Veracity::Correct => println!("Correct!"),
-        Veracity::Incorrect => println!("Incorrect!"),
+        Veracity::Correct => {
+            println!("Correct!");
+            challenge_set.increase_bounds();
+        }
+        Veracity::Incorrect => {
+            println!("Incorrect!");
+            challenge_set.decrease_bounds();
+        }
     }
 }
