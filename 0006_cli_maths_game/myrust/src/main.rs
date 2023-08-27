@@ -65,6 +65,7 @@ fn main() {
 
     let mut challenge: NumberRange = NumberRange::new();
 
+    /*
     let uniform: Uniform<i32> = Uniform::new(challenge.lower_bound, challenge.upper_bound);
 
     let num_l: i32 = uniform.sample(&mut rng);
@@ -84,6 +85,11 @@ fn main() {
     match veracity {
         Veracity::Correct => println!("Correct!"),
         Veracity::Incorrect => println!("Incorrect!"),
+    }
+    */
+
+    while true {
+        game_logic(&mut rng, &mut challenge);
     }
 }
 
@@ -112,11 +118,16 @@ fn check_answer(actual: i32, expected: i32) -> Veracity {
     }
 }
 
-fn game_logic(random_thread_range: &ThreadRng, challenge_set: &NumberRange) -> () {
+fn game_logic(random_thread_range: &mut ThreadRng, challenge_set: &mut NumberRange) -> () {
     let uniform: Uniform<i32> = Uniform::new(challenge_set.lower_bound, challenge_set.upper_bound);
 
-    let num_l: i32 = uniform.sample(&mut random_thread_range);
-    let num_r: i32 = uniform.sample(&mut random_thread_range);
+    /**
+     * the sample method takes in a mutable reference of ThreadRng
+     * Because this function already takes in that mutable reference,
+     * just pass the argument into method.
+     */
+    let num_l: i32 = uniform.sample(random_thread_range);
+    let num_r: i32 = uniform.sample(random_thread_range);
     let expected: i32 = num_l + num_r;
     println!("{num_l} + {num_r} = ?");
 
