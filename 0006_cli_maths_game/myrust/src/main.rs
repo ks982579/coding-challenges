@@ -4,7 +4,9 @@
  * TODO:
  * [ ] - increase and decrease difficulty based on correct answers.
  * [ ] - implement other operations other than adding.
- * [ ] - Implement better logic
+ * [ ] - Implement better logic to quit
+ * [ ] - scoring
+ * [ ] - Timer of some sort - going into multi-threading?
  */
 use rand::distributions::{Distribution, Uniform};
 use rand::rngs::ThreadRng;
