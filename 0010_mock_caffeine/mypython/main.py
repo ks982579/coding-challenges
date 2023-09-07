@@ -7,6 +7,9 @@ Windows API documentation
 https://learn.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-keybd_event?redirectedfrom=MSDN
 
 https://github.com/moses-palmer/pynput/tree/master/lib/pynput/keyboard
+https://github.com/asweigart/pyautogui/blob/master/pyautogui/_pyautogui_x11.py
+    xlib.ext.xtext.fake_input
+https://github.com/simonzack/python3-xlib
 """
 
 import time
