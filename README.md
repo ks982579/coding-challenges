@@ -9,6 +9,11 @@ Solving various coding questions and challenges, from sources like Leetcode or a
     + 
 + Stats package for mean, median, mode, standard deviation, and variance.
     + This idea is based for creating a Rust library.
++ Convolutions
++ Convert Coordinates from Cartesian to Polar, and back
++ Gini Index
++ Gini impurity
++ Shannon Entropy and Cross Entropy
 + Implement image blur
 + Implement image unblur?
 
