@@ -22,7 +22,7 @@ Solving various coding questions and challenges, from sources like Leetcode or a
 ## Groups
 
 + 0000: Normal easy-hard problems for skill building
-+ 1000: 
++ 1000: Math Related problems 
 + 2000:
 + 3000:
 + 4000:
