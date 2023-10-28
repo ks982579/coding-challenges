@@ -28,6 +28,6 @@ Solving various coding questions and challenges, from sources like Leetcode or a
 + 4000:
 + 5000:
 + 6000:
-+ 7000:
++ 7000: 
 + 8000: 
 + 9000: Off limits, not uploaded to GitHub
