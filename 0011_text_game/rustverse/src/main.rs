@@ -1,19 +1,28 @@
-pub mod beings {
-    #[derive(Default, Debug, Clong)]
+pub mod humans {
+    #[derive(Default, Debug, Clone)]
     pub enum AttackTypes {
-        physical,
-        fire,
-        electric,
-        ice,
+        Physical,
+        Energy,
+        Fire,
+        Electric,
+        Ice,
+    }
+
+    trait Fighter {
+        fn attack<T> (&self, opponent: T)
+        where: T: Fighter,
+        {
+            println!("Attacking");
+        }
     }
 
     pub struct BasicAttack {
         pub attack_types: Vec<AttackTypes>,
         pub damage: u32,
-        pub effects: Optional<str>,
+        pub effects: Option<&str>,
     }
 
-    pub struct Being {
+    pub struct Human {
         pub name: String,
         pub health: u32,
         pub strength: u32,
@@ -26,11 +35,15 @@ pub mod beings {
  * Then use spread syntax 
  */
 
-use crate::beings::Being;
+use crate::humans::Human;
+
+fn game_match(fighter1: Human, fighter2: fighter) -> Human {
+
+}
 
 fn main() {
     println!("Hello, world!");
-    let batman: Being = Being {
+    let batman: Human = Human {
         name: String::from("Batman"),
         health: 100,
         strength: 10,
