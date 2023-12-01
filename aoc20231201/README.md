@@ -1,4 +1,4 @@
-# Advant of Code 2023-12-01
+# Advent of Code 2023-12-01
 
 ## Part 1
 
