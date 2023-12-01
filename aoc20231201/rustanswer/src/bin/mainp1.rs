@@ -3,16 +3,16 @@ use std::path::Path;
 use std::env;
 
 const SPELT_NUMBERS: [(&str, &str);10] = [
-    ("zero", "0"),
-    ("one", "1"),
-    ("two", "2"),
-    ("three", "3"),
-    ("four", "4"),
-    ("five", "5"),
-    ("six", "6"),
-    ("seven", "7"),
-    ("eight", "8"),
-    ("nine", "9")
+    ("zero", "z0o"),
+    ("one", "o1e"),
+    ("two", "t2o"),
+    ("three", "t3e"),
+    ("four", "f4r"),
+    ("five", "f5e"),
+    ("six", "s6x"),
+    ("seven", "s7n"),
+    ("eight", "e8t"),
+    ("nine", "n9e")
 ];
 
 fn main() {
@@ -29,6 +29,7 @@ fn main() {
             continue;
         } else {
             let new_line: &str = &string_to_digit(l);
+            println!("{}", new_line);
             let digits: Vec<i32> = pull_digits(new_line);
             println!("{:?}", digits);
             let calibration: i32 = two_digit_number(digits);
@@ -44,7 +45,6 @@ fn main() {
 }
 
 fn string_to_digit(text: &str) -> String {
-    println!("OK");
     let mut new_text: String = String::from(text.trim());
     for combo in SPELT_NUMBERS {
         new_text = new_text.replace(combo.0, combo.1);
