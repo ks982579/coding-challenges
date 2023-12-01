@@ -2,8 +2,22 @@ use std::fs;
 use std::path::Path;
 use std::env;
 
+const SPELT_NUMBERS: [(&str, &str);10] = [
+    ("zero", "0"),
+    ("one", "1"),
+    ("two", "2"),
+    ("three", "3"),
+    ("four", "4"),
+    ("five", "5"),
+    ("six", "6"),
+    ("seven", "7"),
+    ("eight", "8"),
+    ("nine", "9")
+];
+
 fn main() {
     println!("Hello, world!");
+
     let puzzle_path: &Path = Path::new("./puzzle.txt");
     let puzzle_res: std::io::Result<String> = fs::read_to_string(puzzle_path);
     let puzzle: String = puzzle_res.unwrap();
@@ -14,7 +28,8 @@ fn main() {
         if trimmed == "" {
             continue;
         } else {
-            let digits: Vec<i32> = pull_digits(l);
+            let new_line: &str = &string_to_digit(l);
+            let digits: Vec<i32> = pull_digits(new_line);
             println!("{:?}", digits);
             let calibration: i32 = two_digit_number(digits);
             println!("{:?}", calibration);
@@ -26,6 +41,15 @@ fn main() {
         total += cal;
     }
     println!("Total Calibration: {}", total);
+}
+
+fn string_to_digit(text: &str) -> String {
+    println!("OK");
+    let mut new_text: String = String::from(text.trim());
+    for combo in SPELT_NUMBERS {
+        new_text = new_text.replace(combo.0, combo.1);
+    }
+    new_text
 }
 
 fn pull_digits(text: &str) -> Vec<i32> {
