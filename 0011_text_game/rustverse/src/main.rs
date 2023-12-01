@@ -1,5 +1,4 @@
 pub mod fighters;
-// pub mod humans;
 
 use fighters::Fighter;
 use fighters::humans::Human;

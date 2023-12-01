@@ -1,7 +1,4 @@
-// use crate::fighters;
 pub mod humans;
-
-// use crate::fighters;
 
 pub trait Fighter {
     fn attack<T> (&self, opponent: &mut T)
