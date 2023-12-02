@@ -14,21 +14,19 @@ fn main() -> Result<(), Box<dyn Error>> {
     let puzzle: String = fs::read_to_string(puzzle_path)?;
 
     // Creating the max allowed cubes per round
-    let mut max_round: Round = Round {
+    let max_round: Round = Round {
         red: 12,
         blue: 14,
         green: 13,
     };
     let mut possible_games: Vec<Game> = Vec::new();
     for game in puzzle.lines() {
-        dbg!(&game);
         let txt: &str = game.trim();
         if txt == "" {
             continue;
         } else {
             let current_game: Game = Game::from_str(txt, Some(&max_round));
             if current_game.possible {
-                println!("Possible => {:?}", &current_game);
                 possible_games.push(current_game);
             }
         }
@@ -40,7 +38,19 @@ fn main() -> Result<(), Box<dyn Error>> {
     );
     println!("Part 1: {}", folded);
 
-
+    /* Part II Solution */
+    let mut total_power: i32 = 0;
+    for game in puzzle.lines() {
+        let txt: &str = game.trim();
+        if txt == "" {
+            continue;
+        } else {
+            let current_game: Game = Game::from_str(txt, None);
+            let min_set: Round = current_game.find_min_set();
+            total_power += min_set.get_set_power();
+        } 
+    }
+    println!("Total power: {}", total_power);
     
     Ok(())
 }

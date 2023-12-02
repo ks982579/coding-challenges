@@ -1,17 +1,9 @@
-// #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-// pub enum Cubes {
-//     Red(i32),
-//     Blue(i32),
-//     Green(i32),
-// }
-
 #[derive(Default, Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Round {
     pub red: i32,
     pub blue: i32,
     pub green: i32,
 }
-
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Game {
@@ -42,6 +34,9 @@ impl Round {
             green: green_cubes,
         }
     }
+    pub fn get_set_power(&self) -> i32 {
+        self.red * self.blue * self.green
+    }
 }
 
 impl Game {
@@ -62,24 +57,36 @@ impl Game {
             let current_round = Round::from_str(round);
             list_of_rounds.push(current_round);
         }
-        dbg!(&max_round);
         let possible: bool = match max_round {
             None => true,
             Some(the_max) => {
                 list_of_rounds.iter().all(|x| {
-                    dbg!(&x);
                     let redok: bool = x.red <= the_max.red;
                     let blueok: bool = x.blue <= the_max.blue;
                     let greenok: bool = x.green <= the_max.green;
                     redok && blueok && greenok
-                }
-                )
+                })
             }
         };
         Game {
             id: game_id,
             possible: possible,
             rounds: list_of_rounds,
+        }
+    }
+    pub fn find_min_set(&self) -> Round {
+        let mut reds: Vec<i32> = Vec::new();
+        let mut blues: Vec<i32> = Vec::new();
+        let mut greens: Vec<i32> = Vec::new();
+        for round in self.rounds.iter() {
+            reds.push(round.red);
+            blues.push(round.blue);
+            greens.push(round.green);
+        }
+        Round {
+            red: *reds.iter().max().unwrap(),
+            blue: *blues.iter().max().unwrap(),
+            green: *greens.iter().max().unwrap(),
         }
     }
 }
@@ -180,5 +187,36 @@ mod tests {
             Some(&max_round),
         );
         assert_eq!(expected, actual);
+    }
+    #[test]
+    fn test_get_min_set() {
+        let test_game: Game = Game {
+            id: 1,
+            possible: false,
+            rounds: vec![
+                Round {
+                    red: 42,
+                    blue: 3,
+                    green: 0,
+                },
+                Round {
+                    red: 0,
+                    blue: 42,
+                    green: 12,
+                },
+                 Round {
+                    red: 0,
+                    blue: 6,
+                    green: 42,
+                }
+           ]
+        };
+        let actual: Round = test_game.find_min_set();
+        let expected: Round = Round {
+            red: 42,
+            blue: 42,
+            green: 42,
+        };
+        assert_eq!(actual, expected);
     }
 }
