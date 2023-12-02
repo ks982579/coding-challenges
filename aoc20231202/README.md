@@ -27,3 +27,5 @@ Suppose the bag has 12 red, 13 green, and 14 blue cubes. You must determine whic
 I think I want to convert games into a list (vector) of structures. Anticipating more colours, they should be fluid, maybe an enum. 
 
 Then, we can check against a master game solution and sum the IDs.
+
+I was using Enums until comparing a list of enums became difficult. After switching to structs, I notices that the enums weren't necessarily the problem. But after some testing, they would be a problem. You can always sort a Vector of Enums, which seems to in the order of the Enums which would be handy. But then there's the trying to compare values in the enums to be less than the maximum. It was a bad move to try that. 
