@@ -1,0 +1,17 @@
+# Advent of Code
+
+## Day 3
+
+You are taken to the gondola lift station, but they aren't moving. There's a part missing from the engine. 
+
+### Part 1
+
+The puzzle input is the engine schematic. Any number adjacent to a symbol, even diagonally, is a "part number". The "." is not a symbol. 
+
+Your goal is to find the sum of all part numbers. 
+
+#### Rust
+
+Today is a bit harder than the other days. I am creating a `MemoryCell` that will hold the string slices so it can remember and check for symbols in lines all around. But for a struct to hold a slice, that will require... LifeTimes! So, in your progression through your Rust journey, we now are moving steadily towards more advanced topics. They aren't that bad though, just letting the compiler know we intend for the value to exist. 
+
+Also, with the `MemoryCell`, I want to practice traits, so might do that as well... we'll see about implementing the default trait. 
