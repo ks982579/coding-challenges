@@ -19,3 +19,12 @@ Also, with the `MemoryCell`, I want to practice traits, so might do that as well
 All of this has lead me to the spooky [PhantomData](https://doc.rust-lang.org/core/marker/struct.PhantomData.html) for reference types stucts may be "tied" to. For what it is worth, the refactor for my idea of a generic number type would be a lot. So, that'll just be a constraint.
 
 In Rust, sometimes it is easier to create structures to reference as types than to build something adhoc. 
+
+The end value of chopping the string ends up being doubly decreased, so you nearly add +2 to see the next character instead of +1. 
+
+I also didn't notice that the numbers on the edge were being overlooked. That's poor testing on my part, should have tested the _edge_ cases, literally. 
+
+Answer: 540,212
+
+### Part 2
+

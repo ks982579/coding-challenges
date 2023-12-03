@@ -60,14 +60,21 @@ impl<'l> GreatMind<&'l str> for MemoryCell<'l> {
                 for potential_part in potential_parts {
                     let start: usize = (potential_part.start - 1).max(0) as usize;
                     let end: usize =
-                        (potential_part.end + 1).min((c_mem.len() as i32) - 1) as usize;
-                    dbg!(start);
-                    dbg!(end);
+                        (potential_part.end + 1).min((c_mem.len() as i32)) as usize;
                     if found_symbols(&c_mem[start..end])
                         || found_symbols(&b_mem[start..end])
                         || found_symbols(&a_mem[start..end])
                     {
+                        // dbg!(&b_mem[start..end]);
+                        // dbg!(&c_mem[start..end]);
+                        // dbg!(&a_mem[start..end]);
+                        // dbg!("-- YES --");
                         engine_parts.push(potential_part.value);
+                    } else {
+                        // dbg!(&b_mem[start..end]);
+                        // dbg!(&c_mem[start..end]);
+                        // dbg!(&a_mem[start..end]);
+                        // dbg!("-- NO --");
                     }
                 }
                 return engine_parts;
@@ -87,6 +94,11 @@ impl<'l> GreatMind<&'l str> for MemoryCell<'l> {
                             (potential_part.end + 1).min((c_mem.len() as i32) - 1) as usize;
                         if found_symbols(&c_mem[start..end]) || found_symbols(&a_mem[start..end]) {
                             engine_parts.push(potential_part.value);
+                            // dbg!("-- YES --");
+                        } else {
+                            dbg!(&c_mem[start..end]);
+                            dbg!(&a_mem[start..end]);
+                            dbg!("-- NO --");
                         }
                     }
                     return engine_parts;
@@ -116,6 +128,7 @@ fn find_digits(line: &str) -> Vec<Part> {
 
     for c in line.char_indices() {
         // (Index, Char)
+        dbg!(c);
         if c.1.is_ascii_digit() {
             if begin == -1 {
                 begin = c.0 as i32;
@@ -133,16 +146,30 @@ fn find_digits(line: &str) -> Vec<Part> {
                     end = begin.clone();
                 }
                 // reset
+                // dbg!(&digits);
                 coordinates.push(Part {
                     value: digits.parse::<u32>().unwrap(),
                     start: begin.clone(),
-                    end: end.clone(),
+                    end: end.clone() + 1,
                 });
                 begin = -1;
                 end = -1;
                 digits.clear();
             }
         }
+    }
+    // Edge case... literally if number on edge:
+    if begin != -1 {
+        if end == -1 {
+            end = begin.clone();
+        }
+        coordinates.push(
+            Part {
+                value: digits.parse::<u32>().unwrap(),
+                start: begin.clone(),
+                end: end.clone() + 1,
+            }
+        )
     }
     coordinates
 }
@@ -153,6 +180,7 @@ pub struct Part {
     start: i32,
     end: i32,
 }
+
 
 #[cfg(test)]
 mod test {
