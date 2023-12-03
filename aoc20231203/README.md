@@ -33,3 +33,5 @@ Now, if two numbers are combined with an `*`, they are gears. The gear ratio is 
 Wow...
 
 I actually got this on my first submit, unlike Part 1. Basically, I got each number and then the position of any astricks around that number. Then I summed products of numbers with same astricks coordinates, being careful to nott double count any sums.
+
+My answer: 87,605,697

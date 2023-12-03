@@ -1,6 +1,6 @@
 use std::env::current_dir;
-use std::path::PathBuf;
 use std::fs::read_to_string;
+use std::path::PathBuf;
 
 mod engine;
 use engine::*;
@@ -72,4 +72,3 @@ fn main() {
     }
     println!("Part 2: {}", total);
 }
-
