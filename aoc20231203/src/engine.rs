@@ -61,6 +61,8 @@ impl<'l> GreatMind<&'l str> for MemoryCell<'l> {
                     let start: usize = (potential_part.start - 1).max(0) as usize;
                     let end: usize =
                         (potential_part.end + 1).min((c_mem.len() as i32) - 1) as usize;
+                    dbg!(start);
+                    dbg!(end);
                     if found_symbols(&c_mem[start..end])
                         || found_symbols(&b_mem[start..end])
                         || found_symbols(&a_mem[start..end])
@@ -126,6 +128,10 @@ fn find_digits(line: &str) -> Vec<Part> {
             if begin == -1 {
                 continue;
             } else {
+                // single digit check...
+                if end == -1 {
+                    end = begin.clone();
+                }
                 // reset
                 coordinates.push(Part {
                     value: digits.parse::<u32>().unwrap(),

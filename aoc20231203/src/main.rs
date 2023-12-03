@@ -11,7 +11,7 @@ fn main() {
     puzzle_path.push("puzzle.txt");
     let schematics: String = read_to_string(puzzle_path).unwrap();
     let mut ai: MemoryCell = MemoryCell::default();
-    let mut total: <u32> = 0;
+    let mut total: u32 = 0;
     for line in schematics.lines() {
         ai.remember(line.trim());
         let parts: Vec<u32> = ai.find_engine_parts();
