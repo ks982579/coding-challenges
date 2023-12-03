@@ -6,6 +6,7 @@ pub trait Number: Add + Sub + Sized {}
 pub trait GreatMind<T> {
     fn remember(&mut self, info: T);
     fn find_engine_parts(&self) -> Vec<u32>;
+    fn find_gear_parts(&self) -> Vec<GearPart>;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -13,6 +14,7 @@ pub struct MemoryCell<'l> {
     pub before: Option<&'l str>,
     pub current: Option<&'l str>,
     pub after: Option<&'l str>,
+    pub vert_line: u32,
 }
 
 impl<'l> Default for MemoryCell<'l> {
@@ -21,6 +23,7 @@ impl<'l> Default for MemoryCell<'l> {
             before: None,
             current: None,
             after: None,
+            vert_line: 0,
         }
     }
 }
@@ -107,6 +110,111 @@ impl<'l> GreatMind<&'l str> for MemoryCell<'l> {
             },
         }
     }
+
+    fn find_gear_parts(&self) -> Vec<GearPart> {
+        let mut engine_parts: Vec<u32> = Vec::new();
+        let mut potential_gears: Vec<GearPart> = Vec::new();
+        match self.before {
+            Some(b_mem) => {
+                let mut c_mem: &str = "";
+                let mut a_mem: &str = "";
+                // pull out values
+                if let Some(line) = self.current {
+                    c_mem = &line;
+                }
+                if let Some(line) = self.after {
+                    a_mem = &line;
+                }
+                let potential_parts: Vec<Part> = find_digits(&c_mem);
+                // Here
+                for potential_part in potential_parts {
+                    let start: usize = (potential_part.start - 1).max(0) as usize;
+                    let end: usize =
+                        (potential_part.end + 1).min((c_mem.len() as i32)) as usize;
+                    let b_astr: Vec<usize> = find_astr(&b_mem[start..end]);
+                    let c_astr: Vec<usize> = find_astr(&c_mem[start..end]);
+                    let a_astr: Vec<usize> = find_astr(&a_mem[start..end]);
+                    for top in b_astr {
+                        let tmp = GearPart {
+                            value: potential_part.value.clone(),
+                            coordinate: ((top + start) as u32, self.vert_line.clone() - 1),
+                        };
+                        potential_gears.push(tmp);
+                    }
+                    for mid in c_astr {
+                        let tmp = GearPart {
+                            value: potential_part.value.clone(),
+                            coordinate: ((mid + start) as u32, self.vert_line.clone()),
+                        };
+                        potential_gears.push(tmp);
+                    }
+                    for bot in a_astr {
+                        let tmp = GearPart {
+                            value: potential_part.value.clone(),
+                            coordinate: ((bot + start) as u32, self.vert_line.clone() + 1),
+                        };
+                        potential_gears.push(tmp);
+                    }
+                }
+            }
+            None => match self.current {
+                Some(c_mem) => {
+                    let mut a_mem: &str = "";
+                    // pull out values
+                    if let Some(line) = self.after {
+                        a_mem = &line;
+                    }
+                    let potential_parts: Vec<Part> = find_digits(&c_mem);
+                    // Here
+                    for potential_part in potential_parts {
+                        let start: usize = (potential_part.start - 1).max(0) as usize;
+                        let end: usize =
+                            (potential_part.end + 1).min((c_mem.len() as i32)) as usize;
+                        let c_astr: Vec<usize> = find_astr(&c_mem[start..end]);
+                        let a_astr: Vec<usize> = find_astr(&a_mem[start..end]);
+                        
+                        for mid in c_astr {
+                            let tmp = GearPart {
+                                value: potential_part.value.clone(),
+                                coordinate: ((mid + start) as u32, self.vert_line.clone()),
+                            };
+                            potential_gears.push(tmp);
+                        }
+                        for bot in a_astr {
+                            let tmp = GearPart {
+                                value: potential_part.value.clone(),
+                                coordinate: ((bot + start) as u32, self.vert_line.clone() + 1),
+                            };
+                            potential_gears.push(tmp);
+                        }
+                    }
+                }
+                None => return potential_gears,
+            },
+        }
+        potential_gears
+        // let mut gear_ratios: Vec<u32> = Vec::new();
+        // let mut tmp_gears: Vec<GearPart> = Vec::new();
+        // for potential_gear in potential_gears {
+        //     for tgear in tmp_gears.iter() {
+        //         if potential_gear.coordinate == tgear.coordinate {
+        //             gear_ratios.push(tgear.value.clone() * potential_gear.value.clone());
+        //         }
+        //     }
+        //     tmp_gears.push(potential_gear);
+        // }
+        // gear_ratios
+    }
+}
+
+fn find_astr(line: &str) -> Vec<usize> {
+    let mut x_coords: Vec<usize> = Vec::new();
+    for c in line.char_indices() { //(usize, char)
+        if c.1 == '*' {
+            x_coords.push(c.0);
+        }
+    }
+    x_coords
 }
 
 fn found_symbols(line: &str) -> bool {
@@ -121,6 +229,66 @@ fn found_symbols(line: &str) -> bool {
 }
 
 fn find_digits(line: &str) -> Vec<Part> {
+    let mut coordinates: Vec<Part> = Vec::new();
+    let mut digits: String = String::new();
+    let mut begin: i32 = -1;
+    let mut end: i32 = -1;
+
+    for c in line.char_indices() {
+        // (Index, Char)
+        // dbg!(c);
+        if c.1.is_ascii_digit() {
+            if begin == -1 {
+                begin = c.0 as i32;
+            } else {
+                end = c.0 as i32;
+            }
+            digits.push(c.1);
+            continue;
+        } else {
+            if begin == -1 {
+                continue;
+            } else {
+                // single digit check...
+                if end == -1 {
+                    end = begin.clone();
+                }
+                // reset
+                // dbg!(&digits);
+                coordinates.push(Part {
+                    value: digits.parse::<u32>().unwrap(),
+                    start: begin.clone(),
+                    end: end.clone() + 1,
+                });
+                begin = -1;
+                end = -1;
+                digits.clear();
+            }
+        }
+    }
+    // Edge case... literally if number on edge:
+    if begin != -1 {
+        if end == -1 {
+            end = begin.clone();
+        }
+        coordinates.push(
+            Part {
+                value: digits.parse::<u32>().unwrap(),
+                start: begin.clone(),
+                end: end.clone() + 1,
+            }
+        )
+    }
+    coordinates
+}
+// pub fn
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct Part {
+    value: u32,
+    start: i32,
+    end: i32,
+}
+fn find_gear(line: &str) -> Vec<Part> {
     let mut coordinates: Vec<Part> = Vec::new();
     let mut digits: String = String::new();
     let mut begin: i32 = -1;
@@ -173,12 +341,9 @@ fn find_digits(line: &str) -> Vec<Part> {
     }
     coordinates
 }
-// pub fn
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub struct Part {
-    value: u32,
-    start: i32,
-    end: i32,
+pub struct GearPart {
+    pub value: u32,
+    pub coordinate: (u32, u32)
 }
 
 
@@ -196,6 +361,7 @@ mod test {
             before: Some("hello"),
             current: Some("world"),
             after: Some("AoC2023"),
+            vert_line: 0,
         };
         let mut actual: MemoryCell = MemoryCell::default();
         actual.remember("rust");

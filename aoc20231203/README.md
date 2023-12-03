@@ -28,3 +28,8 @@ Answer: 540,212
 
 ### Part 2
 
+Now, if two numbers are combined with an `*`, they are gears. The gear ratio is the product of the part numbers. You must give the sum of gear ratios. 
+
+Wow...
+
+I actually got this on my first submit, unlike Part 1. Basically, I got each number and then the position of any astricks around that number. Then I summed products of numbers with same astricks coordinates, being careful to nott double count any sums.
