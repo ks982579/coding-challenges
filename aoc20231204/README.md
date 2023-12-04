@@ -26,3 +26,8 @@ How many points in total?
 #### Rust
 
 I found this handy `iter().filter_map(|s| s.parse().ok()).collect()` pattern that allows for a pretty quick extraction of string number into values without crashing. Good for empty strings ;). 
+
+My Answer: 32,001
+
+### Part 2
+

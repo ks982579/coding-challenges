@@ -1,9 +1,9 @@
 #[derive(Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Scratcher {
-    id: usize,
-    winners: Vec<usize>,
-    numbers: Vec<usize>,
-    points: usize,
+    pub id: usize,
+    pub winners: Vec<usize>,
+    pub numbers: Vec<usize>,
+    pub points: usize,
 }
 
 impl Scratcher {
@@ -41,6 +41,20 @@ impl Scratcher {
             points: 0,
         }
     }
+
+    pub fn check_winnings(&mut self) {
+        // reset points just in case
+        self.points = 0;
+        for n in self.winners.iter() {
+            if self.numbers.contains(n) {
+                if self.points == 0 {
+                    self.points = 1;
+                } else {
+                    self.points *= 2;
+                }
+            }
+        }   
+    }
 }
 
 #[cfg(test)]
@@ -71,5 +85,23 @@ mod tests {
             points: 0,
         }; 
         assert_ne!(wrong, expected);
+    }
+    #[test]
+    fn test_check_points() {
+        let mut check1 = Scratcher::from_str(
+            "Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53"
+        );
+        check1.check_winnings();
+        let mut check2 = Scratcher::from_str(
+            "Card  4: 41 92 73 84 69 | 41 92 73 84 69  1  2  3  4  5"
+        );
+        check2.check_winnings();
+        let mut check3 = Scratcher::from_str(
+            "Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"
+        );
+        check3.check_winnings();
+        assert_eq!(check1.points, 8);
+        assert_eq!(check2.points, 16);
+        assert_eq!(check3.points, 0);
     }
 }
