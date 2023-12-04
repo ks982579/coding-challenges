@@ -1,9 +1,11 @@
-#[derive(Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Hash, PartialEq, Eq, PartialOrd, Ord, Clone)]
 pub struct Scratcher {
     pub id: usize,
     pub winners: Vec<usize>,
     pub numbers: Vec<usize>,
     pub points: usize,
+    pub count: usize,
+    pub instance: usize,
 }
 
 impl Scratcher {
@@ -39,6 +41,8 @@ impl Scratcher {
             winners: winners,
             numbers: candidates,
             points: 0,
+            count: 0,
+            instance: 1,
         }
     }
 
@@ -52,8 +56,12 @@ impl Scratcher {
                 } else {
                     self.points *= 2;
                 }
+                self.count += 1;
             }
         }   
+    }
+    pub fn update_instance(&mut self, update: usize) {
+        self.instance += update;
     }
 }
 
@@ -72,6 +80,8 @@ mod tests {
             winners: vec![1,2,3,4,5],
             numbers: vec![1,2,3,4,5,6,7],
             points: 0,
+            count:0,
+            instance:1,
         };
         let actual: Scratcher = Scratcher::from_str(
             "Card  42: 1 2  3  4  5 | 1 2 3  4  5  6  7"
@@ -83,6 +93,8 @@ mod tests {
             winners: vec![1,2,3,4,5],
             numbers: vec![1,2,3,4,5,9,7],
             points: 0,
+            count: 0,
+            instance: 1,
         }; 
         assert_ne!(wrong, expected);
     }
@@ -103,5 +115,23 @@ mod tests {
         assert_eq!(check1.points, 8);
         assert_eq!(check2.points, 16);
         assert_eq!(check3.points, 0);
+    }
+    #[test]
+    fn test_check_counts() {
+        let mut check1 = Scratcher::from_str(
+            "Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53"
+        );
+        check1.check_winnings();
+        let mut check2 = Scratcher::from_str(
+            "Card  4: 41 92 73 84 69 | 41 92 73 84 69  1  2  3  4  5"
+        );
+        check2.check_winnings();
+        let mut check3 = Scratcher::from_str(
+            "Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"
+        );
+        check3.check_winnings();
+        assert_eq!(check1.count, 4);
+        assert_eq!(check2.count, 5);
+        assert_eq!(check3.count, 0);
     }
 }

@@ -36,3 +36,7 @@ Apparently the elf didn't know the actual rules. There are no points. Winners ca
 You now must determine the total count of cards you would end up with. Note that, in the above example, since we won another card 11, if that card had a winner, we would technically have 2 of those winners... making more copies of 12...
 
 The initial code from part 1 plays nicely into this. 
+
+Ok, so it was going very well until I had a fight with the borrow checker and lost. It was not pretty, trying to update structs in the vector you are iterating through is very hard because you cannot reference the vector inside the iteration easily. You can only pull out one instance at a time because it's a reference to the vector, not just the instance. So, you can clone what you need from one and then update the other accordingly. 
+
+My Answer: 5,037,841
