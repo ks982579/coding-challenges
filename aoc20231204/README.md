@@ -31,3 +31,8 @@ My Answer: 32,001
 
 ### Part 2
 
+Apparently the elf didn't know the actual rules. There are no points. Winners cause you to win more scratch cards, but not at random. If card 10 has 3 winning numbers, you win the next three scratch cards again, so 11, 12, and 13. 
+
+You now must determine the total count of cards you would end up with. Note that, in the above example, since we won another card 11, if that card had a winner, we would technically have 2 of those winners... making more copies of 12...
+
+The initial code from part 1 plays nicely into this. 
