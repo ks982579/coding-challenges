@@ -73,3 +73,4 @@ seed  soil
 
 We want to find closest location for a seed. These are the lowest location numbers corresponding to any initial seed. 
 
+My Answer: 389,056,265

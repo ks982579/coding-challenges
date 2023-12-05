@@ -9,23 +9,35 @@ enum Almanac {
     Location
 }
 
-#[derive(Debug)]
-struct InnerMap {
-    destination_start: u64,
-    source_start: u64,
-    range_len: u64,
+#[derive(Default, Debug)]
+pub struct Seed {
+    pub seed: u64,
+    pub soil: u64,
+    pub fert: u64,
+    pub water: u64,
+    pub light: u64,
+    pub temp: u64,
+    pub humid: u64,
+    pub location: u64,
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug, Clone, Copy)]
+pub struct InnerMap {
+    pub destination_start: u64,
+    pub source_start: u64,
+    pub range_len: u64,
+}
+
+#[derive(Debug, Default, Clone)]
 pub struct Mappings {
-    seeds: Vec::<u64>,
-    seed_to_soil: Vec::<InnerMap>,
-    soil_to_fert: Vec::<InnerMap>,
-    fert_to_water: Vec::<InnerMap>,
-    water_to_light: Vec::<InnerMap>,
-    light_to_temp: Vec::<InnerMap>,
-    temp_to_humid: Vec::<InnerMap>,
-    humid_to_location: Vec::<InnerMap>,
+    pub seeds: Vec::<u64>,
+    pub seed_to_soil: Vec::<InnerMap>,
+    pub soil_to_fert: Vec::<InnerMap>,
+    pub fert_to_water: Vec::<InnerMap>,
+    pub water_to_light: Vec::<InnerMap>,
+    pub light_to_temp: Vec::<InnerMap>,
+    pub temp_to_humid: Vec::<InnerMap>,
+    pub humid_to_location: Vec::<InnerMap>,
 }
 
 impl Mappings {
