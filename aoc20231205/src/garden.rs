@@ -41,7 +41,7 @@ pub struct Mappings {
 }
 
 impl Mappings {
-    pub fn from_str(data: &str) -> Self {
+    pub fn from_str(data: &str, is_range: bool) -> Self {
         let mut state: Almanac = Almanac::Seed;
 
         let mut mapping: Mappings = Mappings::default();
@@ -49,14 +49,37 @@ impl Mappings {
         for lin in data.lines() {
             match state {
                 Almanac::Seed => {
-                    if lin.trim() == "" {
-                        state = Almanac::Soil;
-                    } else {
-                        let str_seeds: Vec::<&str> = lin.trim()
-                            .split(":").collect::<Vec<&str>>()[1]
-                            .split_whitespace().collect();
-                        for seed in str_seeds {
-                            mapping.seeds.push(seed.parse::<u64>().unwrap());
+                    match is_range {
+                        true => {
+                            let mut s_mem: Option<u64> = None;
+                            let str_seeds: Vec::<&str> = lin.trim()
+                                .split(":").collect::<Vec<&str>>()[1]
+                                .split_whitespace().collect();
+                            for each_seed in str_seeds {
+                                let seed_num: u64 = each_seed.parse::<u64>().unwrap();
+                                match s_mem {
+                                    None => {
+                                        s_mem = Some(seed_num);
+                                    }
+                                    Some(init_seed) => {
+                                        for i in (init_seed..init_seed+seed_num) {
+                                            mapping.seeds.push(i);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        false => {
+                            if lin.trim() == "" {
+                                state = Almanac::Soil;
+                            } else {
+                                let str_seeds: Vec::<&str> = lin.trim()
+                                    .split(":").collect::<Vec<&str>>()[1]
+                                    .split_whitespace().collect();
+                                for seed in str_seeds {
+                                    mapping.seeds.push(seed.parse::<u64>().unwrap());
+                                }
+                            }
                         }
                     }
                 }
