@@ -10,6 +10,6 @@ Your puzzle input is a paper that lists the time allowed for each race and the b
 
 You have toy boats, hold the button on top to charge the boat and release the button to let her fly! Charging the boat increases speed one millimeter per millisecond. If you are given 7 milliseconds, and you hold the button down for 2, it will travel 2 millimeters per millisecond for the remaining 5 seconds. Apparently instantaneous acceleration. 
 
-Your goal is to view you _margin of error_ for winning. Determine the number of ways you can beat the best record, holding button for 4, 5, 6 etc... Your answer should be the product of ways.
+Your goal is to view you _margin of error_ for winning. Determine the number of ways you can beat the best record, holding button for 4, 5, 6 etc... Your answer should be the product of _the number of_ ways. So if the race can win with a button held for 2 seconds or 3 seconds, that is two ways. Then, multiply that 2 by the number of ways for the next.
 
-
+My Answer: 3,316,275
