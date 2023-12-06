@@ -36,4 +36,9 @@ fn main() {
         dbg!(&product);
     }
     println!("Margin of Error: {}", &product);
+
+    // --- Part II ---
+    let big_race = Race::from_str_with_bad_kerning(&puzzle);
+    let answer: u64 = big_race.possible_winning_strategies();
+    println!("Part 2: {}", &answer);
 }
