@@ -31,3 +31,7 @@ QQQJA 483
 Each hand wins an amount equal to its bid multiplied by its rank. The weakest hand is rank 1 and the strongest is rank 5. Given your puzzle input, you must determine the total winnings.
 
 For context, there are 1,000 hands. 
+
+Had an issue with the sorting thinking equal return none and continues to sort...
+
+My Answer: 246,163,188
