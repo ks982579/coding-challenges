@@ -35,3 +35,19 @@ For context, there are 1,000 hands.
 Had an issue with the sorting thinking equal return none and continues to sort...
 
 My Answer: 246,163,188
+
+### Part II
+
+The twist is now that "J" cards are actually _jokers_, and used as wildcards. It is only wild in terms of creating a hand, and not in strenght. To balance the wild, J is now even weaker than a 2!
+
+Find the new winnings.
+
+There's going to be redundant code for me, but it's the easiest way. A refctor after the fact would be great. 
+
+wrong: 501000500
+
+wrong (to high): 246,350,798
+
+I missed the fact the J is weaker than 2
+
+My Answer: 245,794,069
