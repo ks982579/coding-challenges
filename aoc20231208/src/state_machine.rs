@@ -1,3 +1,5 @@
+use num::integer::lcm;
+
 fn parse_tup(tup: &str) -> [&str; 2] {
     let to_trim: &[_] = &[' ', '(', ')', '\n']; 
     let mut tmp_tup: &str = tup.trim_matches(to_trim);
@@ -76,7 +78,93 @@ pub fn count_moves(instructions: &Instructions, directions: &Vec<Node>) -> usize
 } 
 
 
-pub fn count_ghost_moves(inst: Instructions, dir: Vec<Node>) {}
+pub fn count_ghost_moves(inst: &Instructions, dir: &Vec<Node>) -> usize {
+    let mut moves: usize = 0;
+    let mut iterations: usize = 0;
+    let mut memory: Vec<&str> = Vec::new();
+    let mut ghost_truth: bool = true;
+    
+    // Load starting positions
+    for en in dir.iter() {
+        if en.id.ends_with('A') {
+            memory.push(en.id);
+        }
+    }
+
+    // check all paths at once...
+    while ghost_truth {
+        for einst in inst.directions.iter() {
+            for emem in memory.iter_mut() {
+                for d in dir.iter() {
+                    if d.id == *emem {
+                        *emem = if *einst == 'L' {d.left} else {d.right};
+                        break
+                    }
+                }
+            }   
+            moves += 1;
+            ghost_truth = false;
+            for emem in memory.iter() {
+                if !emem.ends_with('Z') {
+                    ghost_truth = true;
+                    break;
+                } 
+            }
+            if !ghost_truth {
+                break;
+            }
+        }
+        iterations += 1;
+        println!("Move: {} - Iteration {}", &moves, &iterations);
+    }
+    moves
+}
+
+pub fn count_ghost_moves_multiple(inst: &Instructions, dir: &Vec<Node>) -> usize {
+    // let mut moves: usize = 0;
+    let mut memory: Vec<&str> = Vec::new();
+    let mut ghost_moves: Vec<usize> = Vec::new();
+    
+    // Load starting positions
+    for en in dir.iter() {
+        if en.id.ends_with('A') {
+            memory.push(en.id.clone());
+        }
+    }
+
+    dbg!(&memory);
+
+    for mem in memory {
+        // mem = "AAA"
+        let mut moves: usize = 0;
+        let mut remem: &str = mem;
+        let mut ghost_truth: bool = true;
+        dbg!(remem);
+
+        while ghost_truth {
+            // println!("HERE 1");
+            for einst in inst.directions.iter() {
+                for d in dir.iter() {
+                    if d.id == remem {
+                        remem = if *einst == 'L' {d.left} else {d.right};
+                        moves += 1;
+                        break;
+                    }
+                }
+                if remem.ends_with('Z') {
+                    ghost_truth = false;
+                    break;
+                }
+            }
+        }
+        ghost_moves.push(moves);
+        println!("{} takes {} moves", mem, &moves);
+    }
+
+    let least_thing = ghost_moves.into_iter()
+        .reduce(|acc, x| lcm(acc, x)).unwrap();
+    least_thing
+}
 
 #[cfg(test)]
 mod tests {
@@ -147,7 +235,75 @@ ZZZ = (ZZZ, ZZZ)
                 );
             }
         }
-        let actual: usize = count_moves(instructions, nodes);
+        let actual: usize = count_moves(&instructions, &nodes);
+        let expected: usize = 6;
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn test_count_ghost_moves(){
+        let puz = String::from_str(
+            "LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)
+"
+        ).unwrap();
+
+        let mut instructions: Instructions = Instructions::default();
+        let mut nodes: Vec::<Node> = Vec::with_capacity(puz.lines().count());
+
+        for line_tup in puz.lines().enumerate() {
+            // line_tup = (index: usize, line: &str)
+            if line_tup.0 == 0 {
+                instructions = Instructions::from_str(line_tup.1);
+            } else if line_tup.1.trim() != "" {
+                nodes.push(
+                    Node::from_str(line_tup.1)
+                );
+            }
+        }
+        let actual: usize = count_ghost_moves(&instructions, &nodes);
+        let expected: usize = 6;
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn test_count_ghost_moves_lcm(){
+        let puz = String::from_str(
+            "LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)
+"
+        ).unwrap();
+
+        let mut instructions: Instructions = Instructions::default();
+        let mut nodes: Vec::<Node> = Vec::with_capacity(puz.lines().count());
+
+        for line_tup in puz.lines().enumerate() {
+            // line_tup = (index: usize, line: &str)
+            if line_tup.0 == 0 {
+                instructions = Instructions::from_str(line_tup.1);
+            } else if line_tup.1.trim() != "" {
+                nodes.push(
+                    Node::from_str(line_tup.1)
+                );
+            }
+        }
+        let actual: usize = count_ghost_moves_multiple(&instructions, &nodes);
         let expected: usize = 6;
         assert_eq!(actual, expected);
     }

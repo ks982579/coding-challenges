@@ -35,5 +35,6 @@ fn main() {
 
 
     // instructions && nodes
-
+    let ghost_moves: usize = count_ghost_moves_multiple(&instructions, &nodes);
+    println!("Number of Ghost steps: {}", ghost_moves);
 }

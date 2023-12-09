@@ -42,4 +42,8 @@ _Ghost Theory_: A ghost would travel all paths ending with an 'A' at the same ti
 
 You need to travers all paths at the same time until all paths end with a 'Z'. How many steps did that take? 
 
-My Answer:
+Why is testing important? I let my program go on for a minute thinking it was going to work. But as time passed I wondered if perhaps it was stuck in a loop. I created and ran a quick unit test and it was caught in an infinite loop, just counting away. A quick fix is all it needed. Still, the program takes a while. 
+
+So brute force is taking forever, but I thought of an idea. It's obviously a lowest common multiple problem. 
+
+My Answer: 18,215,611,419,223
