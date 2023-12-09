@@ -51,8 +51,37 @@ impl<'a> Node<'a> {
     }
 }
 
+pub fn count_moves(instructions: &Instructions, directions: &Vec<Node>) -> usize {
+    let mut moves: usize = 0;
+    let mut iterations: usize = 0;
+    let mut memory: &str = "AAA";
+    while memory != "ZZZ" {
+        iterations += 1;
+        for e in instructions.directions.iter() {
+            // probably could have created a huge hashmap
+            for d in directions.iter() {
+                if d.id == memory {
+                    memory = if *e == 'L' {d.left} else {d.right};
+                    moves += 1;
+                    break;
+                }
+            }
+            if memory == "ZZZ" {
+                break;
+            }
+        }
+        println!("Position at end of Iteration {}: {}", &iterations, &memory);
+    }
+    moves
+} 
+
+
+pub fn count_ghost_moves(inst: Instructions, dir: Vec<Node>) {}
+
 #[cfg(test)]
 mod tests {
+    use std::str::FromStr;
+
     use super::*;
 
     #[test]
@@ -93,5 +122,33 @@ mod tests {
         };
         assert_eq!(actual, expected);
         assert_ne!(actual, fake);
+    }
+    #[test]
+    fn test_count_moves(){
+        let puz = String::from_str(
+            "LLR
+
+AAA = (BBB, BBB)
+BBB = (AAA, ZZZ)
+ZZZ = (ZZZ, ZZZ)
+"
+        ).unwrap();
+
+        let mut instructions: Instructions = Instructions::default();
+        let mut nodes: Vec::<Node> = Vec::with_capacity(puz.lines().count());
+
+        for line_tup in puz.lines().enumerate() {
+            // line_tup = (index: usize, line: &str)
+            if line_tup.0 == 0 {
+                instructions = Instructions::from_str(line_tup.1);
+            } else if line_tup.1.trim() != "" {
+                nodes.push(
+                    Node::from_str(line_tup.1)
+                );
+            }
+        }
+        let actual: usize = count_moves(instructions, nodes);
+        let expected: usize = 6;
+        assert_eq!(actual, expected);
     }
 }

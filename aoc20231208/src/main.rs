@@ -18,12 +18,22 @@ fn main() {
         puzzle_path.push("puzzle.txt");
     }
     let puzzle: String = read_to_string(puzzle_path).unwrap();
-    let mut instructions: Instructions;
+    let mut instructions: Instructions = Instructions::default();
+    let mut nodes: Vec::<Node> = Vec::with_capacity(puzzle.lines().count());
     for line_tup in puzzle.lines().enumerate() {
+        // line_tup = (index: usize, line: &str)
         if line_tup.0 == 0 {
             instructions = Instructions::from_str(line_tup.1);
         } else if line_tup.1.trim() != "" {
-            todo!();
+            nodes.push(
+                Node::from_str(line_tup.1)
+            );
         }
     }
+    let moves: usize = count_moves(&instructions, &nodes);
+    println!("Number of steps: {}", moves);
+
+
+    // instructions && nodes
+
 }
