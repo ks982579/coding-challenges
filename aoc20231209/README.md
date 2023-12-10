@@ -55,4 +55,4 @@ Think of it as the same as before, but we will go up the left side, which are th
 
 Above is an example of how we find our previous value. It isn't adding anymore but more like $x_0-y_{-1} = x_{-1}$. 
 
-My Answer: 
+My Answer: 964

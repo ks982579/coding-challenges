@@ -11,11 +11,19 @@ fn main() {
     puzzle_path.push("puzzle.txt");
     let puzzle: String = read_to_string(puzzle_path).unwrap();
 
-    let mut answer: isize = 0;
+    let mut next_answer: isize = 0;
     for line in puzzle.lines() {
         let tmp_report = Report::from_str(line);
-        answer += tmp_report.find_next_value();
+        next_answer += tmp_report.find_next_value();
     }
 
-    println!("Part I: {}", answer);
+    println!("Part I: {}", next_answer);
+
+    let mut prev_answer: isize = 0;
+    for line in puzzle.lines() {
+        let tmp_report = Report::from_str(line);
+        prev_answer += tmp_report.find_previous_value();
+    }
+
+    println!("Part II: {}", prev_answer)
 }

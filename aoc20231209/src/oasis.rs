@@ -2,6 +2,7 @@
 pub struct Report {
     pub values: Vec<isize>,
     pub len: usize,
+    pub first: isize,
     pub last: isize,
 }
 
@@ -10,10 +11,12 @@ impl Report {
         let length = data.len();
         // dbg!(&length);
         let last_val = data[length-1].clone();
+        let first_val: isize = data[0].clone();
         // dbg!(&data);
         Report {
             values: data,
             len: length,
+            first: first_val,
             last: last_val,
         }
     }
@@ -32,7 +35,6 @@ impl Report {
     }
 
     pub fn find_next_value(&self) -> isize {
-        dbg!(&self);
         let mut differences: Vec<isize> = Vec::with_capacity(self.values.len() -1);
         let mut memory: Option<isize> = None;
         for val in self.values.iter() {
@@ -55,9 +57,32 @@ impl Report {
      
             history += extrap;
         }
-        dbg!(&history);
-        dbg!(&self.last);
         self.last.clone() + history
+    }
+
+    pub fn find_previous_value(&self) -> isize {
+        let mut differences: Vec<isize> = Vec::with_capacity(self.values.len() -1);
+        let mut memory: Option<isize> = None;
+        for val in self.values.iter() {
+            match memory {
+                None => memory = Some(val.clone()),
+                Some(prev_val) => {
+                    let diff: isize = val - prev_val;
+                    differences.push(diff);
+                    memory = Some(val.clone());
+                }
+            }
+        }
+
+        let new_report = Report::from_vec(differences);
+        let mut history: isize = 0;
+
+        // something wrong here...
+        if !new_report.is_zeros() {
+            let extrap = new_report.find_previous_value();
+            history += extrap;
+        }
+        self.first.clone() - history
     }
 }
 
@@ -77,9 +102,10 @@ mod tests {
         let expected = Report {
             values: vec![1,2,-3,4,-42],
             len: 5,
+            first: 1,
             last: -42,
         };
-        let fake = Report { values: vec![1,2,3], len: 3, last: 3};
+        let fake = Report { values: vec![1,2,3], len: 3, first:1, last: 3};
         assert_eq!(actual, expected);
         assert_ne!(actual, fake);
     }
@@ -91,4 +117,10 @@ mod tests {
         assert_eq!(next_val, 68);
     }
 
+    #[test]
+    fn test_finding_previous_value() {
+        let this = Report::from_str("10  13  16  21  30  45");
+        let prev_val = this.find_previous_value();
+        assert_eq!(prev_val, 5);
+    }
 }
