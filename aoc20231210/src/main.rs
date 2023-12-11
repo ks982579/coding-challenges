@@ -11,11 +11,14 @@ fn main() {
     puzzle_path.push("puzzle.txt");
     let puzzle = read_to_string(puzzle_path).unwrap();
     println!("printing puzzle?");
-    let maze = PipeMaze::from_str(&puzzle);
+    let mut  maze = PipeMaze::from_str(&puzzle);
     // println!("{:?}", &maze);
     let mut wierd_animal = MazeRunner::default();
-    println!("{:?}", wierd_animal);
-    wierd_animal.traverse_maze(&maze);
+    // println!("{:?}", wierd_animal);
+    wierd_animal.traverse_maze(&mut maze);
     println!("total steps in loop: {}", &wierd_animal.steps);
     println!("Half way: {}", &wierd_animal.steps / 2);
+    let count = wierd_animal.count_nest_spots(&maze);
+    println!("{}", count);
+    
 }
