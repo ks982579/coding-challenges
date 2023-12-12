@@ -107,16 +107,17 @@ L--J.L7...LJS7F-7L7.
 
 The above sketch has many random bits of ground, some of which are in the loop (I) and some of which are outside it (O):
 
-OF----7F7F7F7F-7OOOO
-O|F--7||||||||FJOOOO
-O||OFJ||||||||L7OOOO
-FJL7L7LJLJ||LJIL-7OO
-L--JOL7IIILJS7F-7L7O
-OOOOF-JIIF7FJ|L7L7L7
-OOOOL7IF7||L7|IL7L7|
-OOOOO|FJLJ|FJ|F7|OLJ
-OOOOFJL-7O||O||||OOO
-OOOOL---JOLJOLJLJOOO
+01234567890123456789
+OF----7F7F7F7F-7OOOO 0
+O|F--7||||||||FJOOOO 1
+O||OFJ||||||||L7OOOO 2
+FJL7L7LJLJ||LJIL-7OO 3
+L--JOL7IIILJS7F-7L7O 4
+OOOOF-JIIF7FJ|L7L7L7 5
+OOOOL7IF7||L7|IL7L7| 6
+OOOOO|FJLJ|FJ|F7|OLJ 7
+OOOOFJL-7O||O||||OOO 8
+OOOOL---JOLJOLJLJOOO 9
 
 In this larger example, 8 tiles are enclosed by the loop.
 
@@ -135,16 +136,17 @@ L7JLJL-JLJLJL--JLJ.L
 
 Here are just the tiles that are enclosed by the loop marked with I:
 
-FF7FSF7F7F7F7F7F---7
-L|LJ||||||||||||F--J
-FL-7LJLJ||||||LJL-77
-F--JF--7||LJLJIF7FJ-
-L---JF-JLJIIIIFJLJJ7
-|F|F-JF---7IIIL7L|7|
-|FFJF7L7F-JF7IIL---7
-7-L-JL7||F7|L7F-7F7|
-L.L7LFJ|||||FJL7||LJ
-L7JLJL-JLJLJL--JLJ.L
+01234567890123456789
+FF7FSF7F7F7F7F7F---7 0
+L|LJ||||||||||||F--J 1
+FL-7LJLJ||||||LJL-77 2
+F--JF--7||LJLJIF7FJ- 3
+L---JF-JLJIIIIFJLJJ7 4
+|F|F-JF---7IIIL7L|7| 5
+|FFJF7L7F-JF7IIL---7 6
+7-L-JL7||F7|L7F-7F7| 7
+L.L7LFJ|||||FJL7||LJ 8
+L7JLJL-JLJLJL--JLJ.L 9
 
 In this last example, 10 tiles are enclosed by the loop.
 
@@ -160,3 +162,7 @@ Must save all... I just saw my error of "|L-7F..."
         + No, there are times when you need it to go both ways. 
 
 You must look out for "L7" and "FJ"
+
+I don't know what happened but I finally did it!
+
+My Answer: 349
