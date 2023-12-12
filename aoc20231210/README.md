@@ -158,3 +158,5 @@ Must save all... I just saw my error of "|L-7F..."
     + So you don't count going in the loop or out of the loop until you pass all '-'
     + Quick and dirty might be to always set status to "IN" when hit horizontal pipe.
         + No, there are times when you need it to go both ways. 
+
+You must look out for "L7" and "FJ"

@@ -14,7 +14,13 @@ pub struct MazeRunner {
     pub from: Direction,
     pub position: (usize, usize),
     pub current_pipe: char,
-    pub memory: Vec<(usize, usize)>,
+    pub memory: Vec<Pipe>,
+}
+
+#[derive(Debug)]
+pub enum State {
+    In,
+    Out,
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -22,22 +28,20 @@ pub struct PipeMaze {
     pub start: (usize, usize),
     pub matrix: Vec<Vec<char>>,
     pub length: usize, // Max Y
-    pub width: usize, // Max X
+    pub width: usize,  // Max X
 }
 
 impl PipeMaze {
     pub fn from_str(data: &str) -> PipeMaze {
         println!("hi");
-        let mut start: (usize, usize) = (0,0);
+        let mut start: (usize, usize) = (0, 0);
         let mut maze: Vec<Vec<char>> = Vec::new();
         for datum in data.lines().enumerate() {
             if let Some(index) = datum.1.find('S') {
                 start = (datum.0, index);
                 println!("Starting Position: {:?}", &start);
             }
-            maze.push(
-                datum.1.chars().collect()
-            )
+            maze.push(datum.1.chars().collect())
         }
 
         let length = maze.len();
@@ -55,6 +59,13 @@ impl PipeMaze {
     }
 }
 
+#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct Pipe {
+    symbol: char,
+    y: usize,
+    x: usize,
+}
+
 impl MazeRunner {
     // fn first_move(&mut self, maze: &PipeMaze) {
     //     let look_up = (self.position.0 -1, self.position.1);
@@ -69,40 +80,47 @@ impl MazeRunner {
     //     }
 
     //     let mut potential_new_pos = self.position.clone();
-        
+
     //     // North is -1
     //     potential_new_pos.0 -= 1;
-        
+
     //     if potential_new_pos.0 < 0 {
     //         return false;
     //     }
 
     //     let pipe: char = maze.get_char_at_position(&potential_new_pos);
 
-    //     if pipe == '|' || pipe == 
+    //     if pipe == '|' || pipe ==
     // }
     pub fn traverse_maze(&mut self, maze: &mut PipeMaze) {
         self.position = maze.start.clone();
         let loop_start = true;
         self.current_pipe = 'S';
-        let mut all_locations: Vec<(usize, usize)> = Vec::new();
+        let mut all_locations: Vec<Pipe> = Vec::new();
+        let mut first_direction: Direction = Direction::Above;
+        let mut last_direction: Direction = Direction::Above;
         loop {
+            all_locations.push(Pipe {
+                symbol: self.current_pipe,
+                y: self.position.0,
+                x: self.position.1,
+            });
             match self.current_pipe {
                 '|' => {
-                    all_locations.push(self.position.clone());
                     if self.from == Direction::North {
                         // new position
                         self.position = (self.position.0 + 1, self.position.1);
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still North...
-                    } else { // BOLD - but direction must be from south
+                    } else {
+                        // BOLD - but direction must be from south
                         // new position
                         self.position = (self.position.0 - 1, self.position.1);
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still South...
-                    } 
+                    }
                     self.steps += 1;
                 }
                 '-' => {
@@ -112,17 +130,17 @@ impl MazeRunner {
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still East...
-                    } else { // BOLD - but direction must be from south
+                    } else {
+                        // BOLD - but direction must be from south
                         // new position
                         self.position = (self.position.0, self.position.1 + 1);
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still South...
-                    } 
+                    }
                     self.steps += 1;
                 }
                 'L' => {
-                    all_locations.push(self.position.clone());
                     if self.from == Direction::North {
                         // new position
                         self.position = (self.position.0, self.position.1 + 1);
@@ -130,18 +148,18 @@ impl MazeRunner {
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // Going East so from the west
                         self.from = Direction::West;
-                    } else { // BOLD - must be from the east - going north, from south
+                    } else {
+                        // BOLD - must be from the east - going north, from south
                         // new position
                         self.position = (self.position.0 - 1, self.position.1);
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still South...
                         self.from = Direction::South;
-                    } 
+                    }
                     self.steps += 1;
                 }
                 'J' => {
-                    all_locations.push(self.position.clone());
                     if self.from == Direction::North {
                         // new position
                         self.position = (self.position.0, self.position.1 - 1);
@@ -149,18 +167,18 @@ impl MazeRunner {
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // Going East so from the west
                         self.from = Direction::East;
-                    } else { // BOLD - must be from the west - going north, from south
+                    } else {
+                        // BOLD - must be from the west - going north, from south
                         // new position
                         self.position = (self.position.0 - 1, self.position.1);
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still South...
                         self.from = Direction::South;
-                    } 
+                    }
                     self.steps += 1;
                 }
                 '7' => {
-                    all_locations.push(self.position.clone());
                     if self.from == Direction::South {
                         // new position
                         self.position = (self.position.0, self.position.1 - 1);
@@ -168,18 +186,18 @@ impl MazeRunner {
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // Going East so from the west
                         self.from = Direction::East;
-                    } else { // BOLD - must be from the west - going south, from north
+                    } else {
+                        // BOLD - must be from the west - going south, from north
                         // new position
                         self.position = (self.position.0 + 1, self.position.1);
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still South...
                         self.from = Direction::North;
-                    } 
+                    }
                     self.steps += 1;
                 }
                 'F' => {
-                    all_locations.push(self.position.clone());
                     if self.from == Direction::South {
                         // new position
                         self.position = (self.position.0, self.position.1 + 1);
@@ -187,87 +205,174 @@ impl MazeRunner {
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // Going East so from the west
                         self.from = Direction::West;
-                    } else { // BOLD - must be from the east - going south, from north
+                    } else {
+                        // BOLD - must be from the east - going south, from north
                         // new position
                         self.position = (self.position.0 + 1, self.position.1);
                         // update current pipe
                         self.current_pipe = maze.get_char_at_position(&self.position);
                         // From is still South...
                         self.from = Direction::North;
-                    } 
+                    }
                     self.steps += 1;
                 }
                 'S' => {
                     if self.from != Direction::Above {
+                        last_direction = self.from.clone();
                         break;
                     }
-                    all_locations.push(self.position.clone());
                     // look right - I know there is something here on my puzzle
                     let mut potential_position = self.position.clone();
                     potential_position.1 += 1;
                     let potential_pipe = maze.get_char_at_position(&potential_position);
-                    if potential_pipe == '7' {
+                    if potential_pipe == '7' || potential_pipe == 'J' || potential_pipe == '-' {
                         self.position = potential_position;
                         self.current_pipe = potential_pipe;
                         self.from = Direction::West;
+                        first_direction = Direction::West;
                         self.steps += 1;
-                    } else if potential_pipe == 'J' {
-                        self.position = potential_position;
-                        self.current_pipe = potential_pipe;
-                        self.from = Direction::West;
-                        self.steps += 1;
+                        continue;
                     }
-                    
                     // Reset
                     potential_position = self.position.clone();
                     potential_position.0 += 1;
                     let potential_pipe = maze.get_char_at_position(&potential_position);
-                    if potential_pipe == '|' {
+                    if potential_pipe == '|' || potential_pipe == 'J' || potential_pipe == 'L' {
                         self.position = potential_position;
                         self.current_pipe = potential_pipe;
                         self.from = Direction::North;
+                        first_direction = Direction::North;
                         self.steps += 1;
-                    } else if potential_pipe == 'J' {
+                        continue;
+                    }
+                    // Reset
+                    potential_position = self.position.clone();
+                    potential_position.1 -= 1;
+                    let potential_pipe = maze.get_char_at_position(&potential_position);
+                    if potential_pipe == '-' || potential_pipe == 'F' || potential_pipe == 'L' {
                         self.position = potential_position;
                         self.current_pipe = potential_pipe;
-                        self.from = Direction::North;
+                        self.from = Direction::East;
+                        first_direction = Direction::East;
                         self.steps += 1;
+                        continue;
+                    }
+                    // Reset
+                    potential_position = self.position.clone();
+                    potential_position.0 -= 1;
+                    let potential_pipe = maze.get_char_at_position(&potential_position);
+                    if potential_pipe == '|' || potential_pipe == 'F' || potential_pipe == '7' {
+                        self.position = potential_position;
+                        self.current_pipe = potential_pipe;
+                        self.from = Direction::South;
+                        first_direction = Direction::South;
+                        self.steps += 1;
+                        continue;
                     }
                 }
-
-
-                _ => { panic!("Non-matching Character: {}", &self.current_pipe) }
+                _ => {
+                    panic!("Non-matching Character: {}", &self.current_pipe)
+                }
             }
         }
+
+        let mut what_is_s: char = 'S';
+        match first_direction {
+            Direction::North => match last_direction {
+                Direction::North => {
+                    what_is_s = '|';
+                }
+                Direction::South => {
+                    what_is_s = '?';
+                }
+                Direction::East => {
+                    what_is_s = 'F';
+                }
+                Direction::West => {
+                    what_is_s = '7';
+                }
+                _ => panic!(),
+            },
+            Direction::South => match last_direction {
+                Direction::North => {
+                    what_is_s = '?';
+                }
+                Direction::South => {
+                    what_is_s = '|';
+                }
+                Direction::East => {
+                    what_is_s = 'L';
+                }
+                Direction::West => {
+                    what_is_s = 'J';
+                }
+                _ => panic!(),
+            },
+            Direction::East => match last_direction {
+                Direction::North => {
+                    what_is_s = 'F';
+                }
+                Direction::South => {
+                    what_is_s = 'L';
+                }
+                Direction::East => {
+                    what_is_s = '-';
+                }
+                Direction::West => {
+                    what_is_s = '?';
+                }
+                _ => panic!(),
+            },
+            Direction::West => match last_direction {
+                Direction::North => {
+                    what_is_s = 'L';
+                }
+                Direction::South => {
+                    what_is_s = 'F';
+                }
+                Direction::East => {
+                    what_is_s = '?';
+                }
+                Direction::West => {
+                    what_is_s = '-';
+                }
+                _ => panic!(),
+            },
+            _ => panic!(),
+        }
+        // The first == the last
+        all_locations.pop();
+        if let Some(the_s) = all_locations.first_mut() {
+            the_s.symbol = what_is_s;
+        }
         self.memory = all_locations;
-        // --------------------------------
     }
+
     pub fn count_nest_spots(&mut self, maze: &PipeMaze) -> usize {
-        self.memory.sort_by(|x, y| {
-            if x.0 == y.0 {
-                return x.1.cmp(&y.1);
+        self.memory.sort_by(|a, b| {
+            if a.y == b.y {
+                return a.x.cmp(&b.x);
             } else {
-                return x.0.cmp(&y.0);
+                return a.y.cmp(&b.y);
             }
         });
-        // println!("{:?}", &self.memory);
-        let mut ordered_chaos: Vec<Vec<(usize, usize)>> = Vec::new();
-        let mut tmp_vec: Vec<(usize, usize)> = Vec::new();
-        let mut y: Option<usize> = None;
-        for pair in self.memory.iter() {
+        let mut ordered_chaos: Vec<Vec<Pipe>> = Vec::new();
+        let mut tmp_vec: Vec<Pipe> = Vec::new();
+        let mut y: Option<Pipe> = None;
+        for pipe in self.memory.iter() {
             match y {
                 None => {
-                    y = Some(pair.0);
-                    tmp_vec.push(pair.clone());
+                    y = Some(pipe.clone());
+                    tmp_vec.push(pipe.clone());
                 }
-                Some(prev) => {
-                    if pair.0 == prev {
-                        tmp_vec.push(pair.clone());
+                Some(ref prev) => {
+                    if pipe.y == prev.y {
+                        tmp_vec.push(pipe.clone());
                     } else {
                         ordered_chaos.push(tmp_vec.clone());
                         tmp_vec = Vec::new();
-                        tmp_vec.push(pair.clone());
-                        y = Some(pair.0);
+                        tmp_vec.push(pipe.clone());
+                        y = Some(pipe.clone());
                     }
                 }
             }
@@ -275,49 +380,114 @@ impl MazeRunner {
         if tmp_vec.len() > 0 {
             ordered_chaos.push(tmp_vec);
         }
-        // println!("{:?}", &ordered_chaos);
-    
-        let mut left: Option<(usize, usize)> = None;
-        // let mut right: Option<(usize, usize)> = None;
-        let mut count: usize = 0;
-    
-        for entropy in ordered_chaos {
-            // Vec<(usize, usize)>
-            for chaos in entropy {
-                match left {
-                    None => left = Some(chaos),
-                    Some(left_pair) => {
-                        if left_pair.0 != chaos.0 {
-                            dbg!("{} != {}", &left_pair.0, &chaos.0);
-                        }
-                        dbg!(&left_pair);
-                        dbg!(&chaos);
-                        let mut horizontal = true;
-                        for c in (left_pair.1+1..chaos.1) {
-                            let check_pair = (left_pair.0, c);
-                            dbg!(&check_pair);
-                            let pipe = maze.get_char_at_position(&check_pair);
-                            dbg!(&pipe);
 
-                            if '-' == pipe && horizontal {
-                                continue;
-                            } else {
-                                horizontal = false;
-                                count += 1;
-                                dbg!(&count);
+        let mut count: usize = 0;
+        for entropy in ordered_chaos {
+            let mut status: State = State::Out;
+            status = State::Out;
+            let mut prev_pipe: Option<Pipe> = None;
+            
+            let mut flag_f = false;
+            let mut flag_l = false;
+            let mut flag_r = false; // reverse...
+
+            for chaos in entropy {
+                // dbg!(&chaos);
+                match prev_pipe {
+                    // Should never start with '-'
+                    None => {
+                        if chaos.symbol == 'F' {
+                            flag_f = true;
+                            status = State::In;
+                        } else if chaos.symbol == 'L' {
+                            flag_l = true;
+                            status = State::In;
+                        } else {
+                            status = State::In;
+                        }
+                        prev_pipe = Some(chaos.clone());
+                    }
+                    Some(ref pipe) => {
+                        
+                        match status {
+                            State::In => {
+                                if  chaos.symbol == '-'
+                                {
+                                    // Status stays IN
+                                    status = State::In;
+                                } else if chaos.symbol == '7' {
+                                    if flag_f {
+                                        flag_f = false;
+                                        if flag_r {
+                                            status = State::In;
+                                        } else {
+                                            status = State::Out;
+                                        }
+                                        flag_r = false;
+                                    } else if flag_l {
+                                        flag_l = false;
+                                        if flag_r {
+                                            status = State::Out;
+                                        } else {
+                                            status = State::In;
+                                        }
+                                        flag_r = false;
+                                    }
+                                } else if chaos.symbol == 'J' {
+                                    if flag_f {
+                                        flag_f = false;
+                                        if flag_r {
+                                            status = State::Out;
+                                        } else {
+                                            status = State::In;
+                                        }
+                                        flag_r = false;
+                                    } else if flag_l {
+                                        flag_l = false;
+                                        if flag_r {
+                                            status = State::In;
+                                        } else {
+                                            status = State::Out;
+                                        }
+                                        flag_r = false;
+                                    }
+                                } else if chaos.symbol == 'F' {
+                                    flag_f = true;
+                                    flag_r = true;
+                                    status = State::In;
+                                } else if chaos.symbol == 'L' {
+                                    flag_l = true;
+                                    flag_r = true;
+                                    status = State::In;
+                                } else {
+                                    status = State::Out;
+                                }
+                                count += chaos.x - pipe.x - 1;
+                                prev_pipe = Some(chaos.clone());
+                            }
+                            State::Out => {
+                                // Out will never start with '-'   
+                                if chaos.symbol == 'F'
+                                {
+                                    flag_f = true;
+                                    status = State::In;
+                                } else if chaos.symbol == 'L' {
+                                    flag_l = true;
+                                    status = State::In;
+                                } else {
+                                    status = State::In;
+                                }
+                                prev_pipe = Some(chaos.clone());
                             }
                         }
-                        left = None;
                     }
                 }
             }
-            // RESET
-            left = None;
         }
+
         count
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -360,6 +530,7 @@ L--J.L7...LJS7F-7L7.
         runner.traverse_maze(&mut maze);
         // dbg!(&runner);
         assert_eq!(runner.steps, 140);
+        // dbg!(&runner.memory);
         let count = runner.count_nest_spots(&maze);
         assert_eq!(count, 8);
     }
