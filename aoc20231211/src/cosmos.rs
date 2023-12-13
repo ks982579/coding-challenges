@@ -19,6 +19,37 @@ pub struct Universe {
 #[derive(Debug, PartialEq, Eq)]
 pub struct CosmicError;
 
+pub fn expand_str(data: &str) -> String {
+    let mut expanded_universe: String = String::new();
+    let mut col_expansion: Vec<bool> = Vec::new();
+    for (row_index, line) in data.lines().enumerate() {
+        let mut expand_col = true;
+        for (col_index, symbol) in line.char_indices() {
+            // let expand: &mut bool = &mut col_expansion[index];
+            // If galaxy, then don't expand column, but don't check if unnecessary.
+            if expand_col && symbol == '#' {
+                expand_col = false;
+            }
+            let truth: Option<&mut bool> = col_expansion.get_mut(col_index);
+            match truth {
+                None => {
+                    col_expansion.push(symbol == '.');
+                },
+                Some(that) => {
+                    *that &= symbol == '.';
+                }
+            }
+        }
+        if expand_col {
+            expanded_universe.push_str(line);
+        }
+        expanded_universe.push_str(line);
+        expanded_universe.push('\n');
+    }
+    // When Do we add column?
+    String::new()
+}
+
 impl std::str::FromStr for Universe {
     type Err = Error;
 
