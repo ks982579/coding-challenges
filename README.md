@@ -25,9 +25,11 @@ Solving various coding questions and challenges, from sources like Leetcode or a
 + 1000: Math Related problems 
 + 2000:
 + 3000:
-+ 4000:
++ 4000: Basic Data Structures and Algorithms
 + 5000:
 + 6000:
 + 7000: 
 + 8000: 
 + 9000: Off limits, not uploaded to GitHub
+
+Basically, I have started my Algorithmics course for the Master's and for practice, I am reserving the 4000s.
