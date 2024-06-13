@@ -7,7 +7,7 @@ fn gcd(n1: i32, n2: i32) -> Option<i32> {
     loop {
         if div <= 0 {
             break;
-        } else if (n1 % div) == 0 as i32 && (n2 % div) == 0 as i32 {
+        } else if (n1 % div) == 0 && (n2 % div) == 0 {
             break;
         } else {
             div -= 1;
