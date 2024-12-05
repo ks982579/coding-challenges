@@ -9,6 +9,8 @@
 #include <vector>
 
 std::string AssetReader::readFileToString(const std::string &filepath) {
+  // Should automatically close files when going out of scope
+  // thanks to Resource Acquisition Is Initialization (RAII).
   std::ifstream file(getAssetPath(filepath), std::ios::in);
   if (!file) {
     throw std::runtime_error("Could not open file: " + filepath);

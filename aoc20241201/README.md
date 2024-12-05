@@ -18,6 +18,19 @@ Examples:
 
 > You don't need an example
 
+Just notes
+
+```bash
+cmake .
+cmake --build .
+```
+
+And learning new things -> Reset default editor for Git:
+
+```bash
+git config --global core.editro "nvim"
+```
+
 ## Part 2
 
 > Not Yet...

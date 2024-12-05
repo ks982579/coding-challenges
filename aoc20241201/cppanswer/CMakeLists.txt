@@ -12,7 +12,15 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target)
 # for static libraries
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target)
 
+add_library(mylibs
+  src/libs/asset_reader.cpp
+  src/libs/asset_reader.h
+)
+
 add_executable(${PROJECT_NAME} src/main.cpp)
+
+# Linking Libraries
+target_link_libraries(${PROJECT_NAME} PRIVATE mylibs)
 
 add_custom_command(
   TARGET ${PROJECT_NAME} POST_BUILD
