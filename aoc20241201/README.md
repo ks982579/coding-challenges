@@ -31,14 +31,23 @@ And learning new things -> Reset default editor for Git:
 git config --global core.editro "nvim"
 ```
 
+### Answer
+
+1646452
+
 ## Part 2
 
-> Not Yet...
+Well, since the sum was no zero, this means the lists are different.
+Or maybe it is bad handwriting.
+We notice many location IDs appear in both lists.
+So now we compute a similarity score.
+
+I am thinking a cache system will speed up the counting.
 
 ### Hint
 
 > Not Yet...
 
-## The Answer
+### The Answer
 
-> Not Yet.
+23609874
