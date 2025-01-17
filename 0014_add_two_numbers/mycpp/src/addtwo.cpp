@@ -22,12 +22,13 @@ ListNode *Solution::addTwoNumbers(ListNode *l1, ListNode *l2) {
 
   // Don't like setting to null...
   ListNode *result = nullptr;
-  ListNode *digit = result;
+  ListNode *digit = nullptr;
 
   int carryover{0};
 
   while ((cl1 != nullptr && cl2 != nullptr) || carryover != 0) {
     int tmp{0};
+    std::cout << tmp << std::endl;
     tmp += (cl1 != nullptr) ? cl1->val : 0;
     tmp += (cl2 != nullptr) ? cl2->val : 0;
 
@@ -41,8 +42,11 @@ ListNode *Solution::addTwoNumbers(ListNode *l1, ListNode *l2) {
       tmp -= 10;
     }
 
+    std::cout << tmp << std::endl;
+
     if (result == nullptr) {
       result = new ListNode{tmp};
+      digit = result;
     } else {
       digit->next = new ListNode{tmp};
       digit = digit->next;
