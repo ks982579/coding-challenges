@@ -18,5 +18,9 @@ int main() {
   std::cout << "L1 = " << l1->toInt() << "\n";
   std::cout << "L2 = " << l2->toInt() << std::endl;
 
-  // ListNode *result = Solution::addTwoNumbers(l1, l2);
+  ListNode *result = Solution::addTwoNumbers(l1, l2);
+
+  std::cout << "L1 = " << l1->toInt() << "\n";
+  std::cout << "L2 = " << l2->toInt() << "\n";
+  std::cout << "Res = " << result->toInt() << std::endl;
 }
