@@ -16,6 +16,9 @@ struct ListNode {
   // Constructor that takes value and next pointer.
   ListNode(int x, ListNode *next) : val(x), next(next) {}
   int toInt();
+
+  // Adding destructor
+  ~ListNode() { delete next; }
 };
 
 class Solution {
