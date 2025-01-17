@@ -27,4 +27,24 @@ int main() {
   delete l1;
   delete l2;
   delete result;
+
+  // 81
+  l1 = new ListNode{1};
+  l1->next = new ListNode{8};
+
+  // 0
+  l2 = new ListNode{};
+
+  std::cout << "L1 = " << l1->toInt() << "\n";
+  std::cout << "L2 = " << l2->toInt() << std::endl;
+
+  result = Solution::addTwoNumbers(l1, l2);
+
+  std::cout << "L1 = " << l1->toInt() << "\n";
+  std::cout << "L2 = " << l2->toInt() << "\n";
+  std::cout << "Res = " << result->toInt() << std::endl;
+
+  delete l1;
+  delete l2;
+  delete result;
 }

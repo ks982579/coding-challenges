@@ -26,7 +26,7 @@ ListNode *Solution::addTwoNumbers(ListNode *l1, ListNode *l2) {
 
   int carryover{0};
 
-  while ((cl1 != nullptr && cl2 != nullptr) || carryover != 0) {
+  while (cl1 != nullptr || cl2 != nullptr || carryover != 0) {
     int tmp{0};
     std::cout << tmp << std::endl;
     tmp += (cl1 != nullptr) ? cl1->val : 0;
