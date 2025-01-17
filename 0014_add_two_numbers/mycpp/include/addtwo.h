@@ -1,14 +1,24 @@
+// include/addtwo.h
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
+struct ListNode {
+  // members of struct
+  int val;        // value of this node
+  ListNode *next; // pointer to next node
 
-#ifdef _WIN32
-  #define ADDTWO_EXPORT __declspec(dllexport)
-#else
-  #define ADDTWO_EXPORT
-#endif
+  // Default constructor
+  ListNode() : val(0), next(nullptr) {}
+  // Constructor with value
+  ListNode(int x) : val(x), next(nullptr) {}
+  // Constructor that takes value and next pointer.
+  ListNode(int x, ListNode *next) : val(x), next(next) {}
+  int toInt();
+};
 
-ADDTWO_EXPORT void addtwo();
-ADDTWO_EXPORT void addtwo_print_vector(const std::vector<std::string> &strings);
+class Solution {
+public:
+  ListNode *addTwoNumbers(ListNode *l1, ListNode *l2);
+};
