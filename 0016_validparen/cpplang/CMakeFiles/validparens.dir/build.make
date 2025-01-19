@@ -92,6 +92,7 @@ validparens_EXTERNAL_OBJECTS =
 
 target/validparens: CMakeFiles/validparens.dir/src/main.cpp.o
 target/validparens: CMakeFiles/validparens.dir/build.make
+target/validparens: target/libmylibs.a
 target/validparens: CMakeFiles/validparens.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ksull18/code/coding-challenges/0016_validparen/cpplang/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable target/validparens"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/validparens.dir/link.txt --verbose=$(VERBOSE)

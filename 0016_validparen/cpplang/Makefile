@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named mylibs
+
+# Build rule for target.
+mylibs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mylibs
+.PHONY : mylibs
+
+# fast build rule for target.
+mylibs/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylibs.dir/build.make CMakeFiles/mylibs.dir/build
+.PHONY : mylibs/fast
+
+#=============================================================================
 # Target rules for targets named validparens
 
 # Build rule for target.
@@ -128,6 +141,30 @@ validparens: cmake_check_build_system
 validparens/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/validparens.dir/build.make CMakeFiles/validparens.dir/build
 .PHONY : validparens/fast
+
+src/libs/asset_reader.o: src/libs/asset_reader.cpp.o
+.PHONY : src/libs/asset_reader.o
+
+# target to build an object file
+src/libs/asset_reader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylibs.dir/build.make CMakeFiles/mylibs.dir/src/libs/asset_reader.cpp.o
+.PHONY : src/libs/asset_reader.cpp.o
+
+src/libs/asset_reader.i: src/libs/asset_reader.cpp.i
+.PHONY : src/libs/asset_reader.i
+
+# target to preprocess a source file
+src/libs/asset_reader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylibs.dir/build.make CMakeFiles/mylibs.dir/src/libs/asset_reader.cpp.i
+.PHONY : src/libs/asset_reader.cpp.i
+
+src/libs/asset_reader.s: src/libs/asset_reader.cpp.s
+.PHONY : src/libs/asset_reader.s
+
+# target to generate assembly for a file
+src/libs/asset_reader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylibs.dir/build.make CMakeFiles/mylibs.dir/src/libs/asset_reader.cpp.s
+.PHONY : src/libs/asset_reader.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -161,7 +198,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... mylibs"
 	@echo "... validparens"
+	@echo "... src/libs/asset_reader.o"
+	@echo "... src/libs/asset_reader.i"
+	@echo "... src/libs/asset_reader.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

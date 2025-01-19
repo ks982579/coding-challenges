@@ -1,5 +1,5 @@
-CMakeFiles/validparens.dir/src/main.cpp.o: \
- /home/ksull18/code/coding-challenges/0016_validparen/cpplang/src/main.cpp \
+CMakeFiles/mylibs.dir/src/libs/asset_reader.cpp.o: \
+ /home/ksull18/code/coding-challenges/0016_validparen/cpplang/src/libs/asset_reader.cpp \
  /usr/include/stdc-predef.h \
  /home/ksull18/code/coding-challenges/0016_validparen/cpplang/src/libs/asset_reader.h \
  /usr/include/c++/11/fstream /usr/include/c++/11/istream \
@@ -186,7 +186,4 @@ CMakeFiles/validparens.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/allocated_ptr.h \
  /usr/include/c++/11/bits/refwrap.h \
  /usr/include/c++/11/ext/aligned_buffer.h \
- /usr/include/c++/11/bits/fs_dir.h /usr/include/c++/11/bits/fs_ops.h \
- /usr/include/c++/11/iostream /usr/include/c++/11/stack \
- /usr/include/c++/11/deque /usr/include/c++/11/bits/stl_deque.h \
- /usr/include/c++/11/bits/deque.tcc /usr/include/c++/11/bits/stl_stack.h
+ /usr/include/c++/11/bits/fs_dir.h /usr/include/c++/11/bits/fs_ops.h

@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/validparens.dir/src/main.cpp.o -o target/validparens 
+/usr/bin/c++ CMakeFiles/validparens.dir/src/main.cpp.o -o target/validparens  target/libmylibs.a 
