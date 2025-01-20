@@ -1,6 +1,6 @@
 #include "mergelists.h"
-#include <string>
-#include <vector>
+#include <iostream>
+#include <ostream>
 
 int main() {
   // mergelists();
@@ -22,9 +22,11 @@ int main() {
   ListNode *res = result_h;
 
   while (res != nullptr) {
-    std::cout << res->val << "endl";
+    std::cout << res->val << "\n";
     res = res->next;
   }
 
   delete result_h;
+  std::cout << std::flush;
+  return 0;
 };
