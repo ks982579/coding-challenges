@@ -9,9 +9,10 @@ struct ListNode {
   ListNode() : val(0), next(nullptr) {}
   ListNode(int x) : val(x), next(nullptr) {}
   ListNode(int x, ListNode *next) : val(x), next(next) {}
+  ~ListNode() { delete next; }
 };
 
 class Solution {
 public:
-  ListNode *mergeTwoLists(ListNode *list1, ListNode *list2);
+  static ListNode *mergeTwoLists(ListNode *list1, ListNode *list2);
 };
