@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/stocktrade.dir/src/main.cpp.o -o target/stocktrade  target/libmylibs.a 
