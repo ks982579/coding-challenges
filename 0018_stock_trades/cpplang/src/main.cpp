@@ -49,11 +49,16 @@ int main() {
   while ((pos = data.find('\n')) != std::string::npos) {
     std::string line = data.substr(0, pos);
 
-    StockString prices(std::move(line));
+    if (line.length() < 1) {
+      break;
+    }
+
+    StockString prices_str(std::move(line));
+    std::vector<int> prices = prices_str.to_vec_int();
 
     // work
 
-    std::cout << prices << std::endl;
+    std::cout << prices[0] << std::endl;
 
     // Update String
     data.erase(0, pos + 1);
