@@ -1,5 +1,6 @@
 #include "libs/asset_reader.h"
 #include <algorithm>
+#include <cstddef>
 #include <exception>
 #include <filesystem>
 #include <iostream>
@@ -29,6 +30,18 @@ public:
   }
 };
 
+struct Answer {
+  int buy;
+  int sell;
+  int profit;
+
+  void set_schedule(int b, int s, int p) {
+    buy = b;
+    sell = s;
+    profit = p;
+  };
+};
+
 int main() {
   std::string data;
   try {
@@ -53,12 +66,27 @@ int main() {
       break;
     }
 
+    // Should initialize to zero
+    Answer answer{};
+    // std::cout << "ANSWER: " << answer.buy << ", " << answer.sell <<
+    // std::endl;
+
     StockString prices_str(std::move(line));
     std::vector<int> prices = prices_str.to_vec_int();
 
     // work
-
-    std::cout << prices[0] << std::endl;
+    // to prices.size() -1 because can't buy and sell on same day
+    for (size_t i = 0; i < prices.size() - 1; i++) {
+      std::cout << prices.at(i) << std::endl;
+      for (size_t j = i + 1; j < prices.size(); j++) {
+        int ex_profit = prices.at(j) - prices.at(i);
+        if (ex_profit > answer.profit) {
+          answer.set_schedule(prices.at(i), prices.at(j), ex_profit);
+        }
+      }
+    }
+    std::cout << "ANSWER: " << answer.buy << ", " << answer.sell << ", "
+              << answer.profit << std::endl;
 
     // Update String
     data.erase(0, pos + 1);
