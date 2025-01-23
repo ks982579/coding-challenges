@@ -76,13 +76,28 @@ int main() {
 
     // work
     // to prices.size() -1 because can't buy and sell on same day
-    for (size_t i = 0; i < prices.size() - 1; i++) {
+    // for (size_t i = 0; i < prices.size() - 1; i++) {
+    //   std::cout << prices.at(i) << std::endl;
+    //   for (size_t j = i + 1; j < prices.size(); j++) {
+    //     int ex_profit = prices.at(j) - prices.at(i);
+    //     if (ex_profit > answer.profit) {
+    //       answer.set_schedule(prices.at(i), prices.at(j), ex_profit);
+    //     }
+    //   }
+    // }
+
+    int tmp_buy{prices.at(0)};
+
+    // Following Kadane's approach
+    // loop through only once, since same direction is ok
+    for (size_t i = 0; i < prices.size(); i++) {
       std::cout << prices.at(i) << std::endl;
-      for (size_t j = i + 1; j < prices.size(); j++) {
-        int ex_profit = prices.at(j) - prices.at(i);
-        if (ex_profit > answer.profit) {
-          answer.set_schedule(prices.at(i), prices.at(j), ex_profit);
-        }
+      // If we have a new lowest price, we consider buying from this point
+      if (prices.at(i) < tmp_buy) {
+        tmp_buy = prices.at(i);
+        // If buying at new price produces greater profit, store result
+      } else if (prices.at(i) - tmp_buy > answer.profit) {
+        answer.set_schedule(tmp_buy, prices.at(i), prices.at(i) - tmp_buy);
       }
     }
     std::cout << "ANSWER: " << answer.buy << ", " << answer.sell << ", "
