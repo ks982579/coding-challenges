@@ -1,10 +1,16 @@
-# Best Time to Buy and Sell Stock
+# Invert a Binary Tree
 
-This is on Leetcode.
+This question can be found on LeetCode.
 
-Suppose you are given a list of stock prices where the ith element is the price on the ith day.
-The goal is to maximize profits by choosing one day to buy and another to sell, in the future.
+We want to invert a binary tree, and return the root.
+Probably easiest with a diagram:
 
-This reminds me of an algorithm from my Algorithmics course.
-I think it is the "Kadane's Algorithm"?
-But that is the maximum subarray sum, so no, not the same...
+```text
+    4               4
+   / \             / \
+  2   7    ->    7     2
+ /\   /\        / \   / \
+1  3 6  9      9   6  3  1
+```
+
+Looks like just swapping leaves / leaf nodes.
