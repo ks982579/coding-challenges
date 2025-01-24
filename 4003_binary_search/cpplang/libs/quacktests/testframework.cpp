@@ -8,9 +8,8 @@
 
 #include "testframework.h"
 
-template <typename F>
-void TestFramework::addTest(const std::string &name, F &&func) {
-  tests.push_back({name, std::forward<F>(func)});
+void TestFramework::addTest(const std::string &name, TestFn func) {
+  tests.push_back({name, func});
 };
 
 template <typename T>

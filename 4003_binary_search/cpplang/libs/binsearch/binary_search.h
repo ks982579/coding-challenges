@@ -2,5 +2,5 @@
 
 class Solution {
 public:
-  int search(std::vector<int> &nums, int target);
+  static int search(std::vector<int> &nums, int target);
 };
