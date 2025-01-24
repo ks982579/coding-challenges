@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/binarysearch-test.dir/tests/main.cpp.o -o target/binarysearch-test  target/libmylibs.a 

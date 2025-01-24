@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/binarysearch.dir/tests/main.cpp.o -o target/binarysearch  target/libquacktests.a target/libbinsearch.a 

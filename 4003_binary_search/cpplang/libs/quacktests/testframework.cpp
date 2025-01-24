@@ -8,23 +8,22 @@
 
 #include "testframework.h"
 
-void TestFramework::addTest(const std::string &name, TestFn func) {
-  tests.push_back({name, func});
-};
+// void TestFramework::addTest(const std::string &name, TestFn func) {
+//   tests.push_back({name, func});
+// };
 
-template <typename T>
-void TestFramework::assertEqual(const T &expected, const T &actual,
-                                const std::string &message) {
-  if (expected != actual) {
-    throw std::runtime_error(message +
-                             "\nExpected: " + std::to_string(expected) +
-                             "\nGot: " + std::to_string(actual));
-  }
-};
+// template <typename T>
+// void TestFramework::assertEqual(const T &expected, const T &actual) {
+//   std::cout << "IS " << expected << " == " << actual << " ??" << std::endl;
+//   if (expected != actual) {
+//     throw std::runtime_error("\nExpected: " + std::to_string(expected) +
+//                              "\nGot: " + std::to_string(actual));
+//   }
+// };
 
 void TestFramework::run() {
   for (const auto &test : tests) {
-    std::cout << "Runnin " << test.name << "... ";
+    std::cout << "Running " << test.name << "... ";
     try {
       test.fn();
       std::cout << "PASSED\n";

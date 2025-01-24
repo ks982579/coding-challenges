@@ -7,14 +7,12 @@ int main() {
   std::cout << "Testing ..." << std::endl;
   TestFramework tf;
 
-  std::vector<int> nums({-1, 0, 3, 5, 9, 12});
-  int result = Solution::search(nums, 9);
-
-  tf.addTest("Find existing Element", []() -> void {
+  tf.addTest("Find existing Element", [&tf]() -> void {
     std::vector<int> nums({-1, 0, 3, 5, 9, 12});
-    std::cout << "in test" << std::endl;
+    int act = Solution::search(nums, 9);
+    tf.assertEqual(act, 4);
   });
-  // tf.run();
+  tf.run();
 
   return 0;
 }

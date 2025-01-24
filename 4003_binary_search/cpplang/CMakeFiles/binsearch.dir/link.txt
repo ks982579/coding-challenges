@@ -1,2 +1,0 @@
-/usr/bin/ar qc target/libbinsearch.a CMakeFiles/binsearch.dir/libs/binsearch/binary_search.cpp.o
-/usr/bin/ranlib target/libbinsearch.a

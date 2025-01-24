@@ -1,4 +1,6 @@
+#include <exception>
 #include <functional>
+#include <iostream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -19,11 +21,18 @@ public:
   // Note: rvalues are like "temporary" values until stored.
   // For mental model, temporary storage space is called "temporary object
   // pool".
-  void addTest(const std::string &name, TestFn func);
+  template <typename F> void addTest(const std::string &name, F &&func) {
+    tests.push_back({name, std::forward<F>(func)});
+  };
 
-  template <typename T>
-  void assertEqual(const T &expected, const T &actual,
-                   const std::string &message = "");
+  // Templates need definition visible at compile time
+  template <typename T> void assertEqual(const T &expected, const T &actual) {
+    std::cout << "IS " << expected << " == " << actual << " ??" << std::endl;
+    if (expected != actual) {
+      throw std::runtime_error("\nExpected: " + std::to_string(expected) +
+                               "\nGot: " + std::to_string(actual));
+    }
+  };
 
   void run();
 };

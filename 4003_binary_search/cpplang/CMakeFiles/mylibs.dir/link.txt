@@ -1,2 +1,0 @@
-/usr/bin/ar qc target/libmylibs.a CMakeFiles/mylibs.dir/libs/quacktests/testframework.cpp.o
-/usr/bin/ranlib target/libmylibs.a
