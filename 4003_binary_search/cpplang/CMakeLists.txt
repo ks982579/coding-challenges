@@ -18,18 +18,31 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target)
 
 # add libraries
 add_library(
-  mylibs
-  # src/libs/asset_reader.cpp
-  # src/libs/asset_reader.h
+  quacktests
   libs/quacktests/testframework.cpp
-  # libs/binsearch/binary_search.cpp
 )
 
-# Executable
-add_executable(${PROJECT_NAME}-test tests/main.cpp)
+add_library(
+  binsearch
+  libs/binsearch/binary_search.cpp
+)
 
+# add_library(
+#   mylibs
+#   # src/libs/asset_reader.cpp
+#   # src/libs/asset_reader.h
+#   # libs/binsearch/binary_search.cpp
+# )
+
+# Executable
+add_executable(${PROJECT_NAME} tests/main.cpp)
+
+# PUBLIC = Library and users need headers
+# PRIVATE = only libraries need headers
 # LINKING
-target_link_libraries(${PROJECT_NAME} PRIVATE mylibs)
+target_include_directories(quacktests PUBLIC libs/quacktests)
+target_include_directories(quacktests PUBLIC libs/binsearch)
+target_link_libraries(${PROJECT_NAME} PRIVATE quacktests binsearch)
 
 # Need to copy in the assets as well
 # add_custom_command(

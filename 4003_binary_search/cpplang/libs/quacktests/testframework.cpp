@@ -15,7 +15,7 @@ void TestFramework::addTest(const std::string &name, F &&func) {
 
 template <typename T>
 void TestFramework::assertEqual(const T &expected, const T &actual,
-                                const std::string &message = "") {
+                                const std::string &message) {
   if (expected != actual) {
     throw std::runtime_error(message +
                              "\nExpected: " + std::to_string(expected) +
