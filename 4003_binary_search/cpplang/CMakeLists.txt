@@ -17,17 +17,19 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/target)
 
 # add libraries
-# add_library(
-#   mylibs
-#   src/libs/asset_reader.cpp
-#   src/libs/asset_reader.h
-# )
+add_library(
+  mylibs
+  # src/libs/asset_reader.cpp
+  # src/libs/asset_reader.h
+  libs/quacktests/testframework.cpp
+  # libs/binsearch/binary_search.cpp
+)
 
 # Executable
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME}-test tests/main.cpp)
 
 # LINKING
-# target_link_libraries(${PROJECT_NAME} PRIVATE mylibs)
+target_link_libraries(${PROJECT_NAME} PRIVATE mylibs)
 
 # Need to copy in the assets as well
 # add_custom_command(
