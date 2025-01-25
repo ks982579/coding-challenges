@@ -13,7 +13,7 @@ int main() {
     // std::vector<int> nums({-1, 0, 3, 5, 9, 12});
     std::cout << "In Test" << std::endl;
     Image actual = Solution::floodFill(image, 1, 1, 2);
-    Image expected = {{1, 1, 1}, {1, 2, 0}, {1, 0, 1}};
+    Image expected = {{2, 2, 2}, {2, 2, 0}, {2, 0, 1}};
     tf.assertEqual(expected, actual);
   });
 
