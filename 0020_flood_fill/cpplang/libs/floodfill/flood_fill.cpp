@@ -1,4 +1,5 @@
 #include "flood_fill.h"
+#include <iostream>
 #include <queue>
 #include <utility>
 
@@ -26,29 +27,39 @@ Image Solution::floodFill(Image &image, int sr, int sc, int colour) {
     // pop from queue
     qu.pop();
 
+    int tmp_color;
+
     // Update queue
     if (0 <= row + 1 && row + 1 < max_rows) {
-      pix = image.at(row + 1).at(col);
-      if (pix == color_og)
+      tmp_color = image.at(row + 1).at(col);
+      if (tmp_color == color_og) {
+        std::cout << "Adding below" << std::endl;
         qu.push({row + 1, col});
+      }
     }
     if (0 <= row - 1 && row - 1 < max_rows) {
-      pix = image.at(row - 1).at(col);
-      if (pix == color_og)
+      tmp_color = image.at(row - 1).at(col);
+      if (tmp_color == color_og) {
+        std::cout << "Adding above" << std::endl;
         qu.push({row - 1, col});
+      }
     }
     if (0 <= col + 1 && col + 1 < max_cols) {
-      pix = image.at(row).at(col + 1);
-      if (pix == color_og)
+      tmp_color = image.at(row).at(col + 1);
+      if (tmp_color == color_og) {
+        std::cout << "Adding left" << std::endl;
         qu.push({row, col + 1});
+      }
     }
     if (0 <= col - 1 && col - 1 < max_cols) {
-      pix = image.at(row).at(col - 1);
-      if (pix == color_og)
+      tmp_color = image.at(row).at(col - 1);
+      if (tmp_color == color_og) {
+        std::cout << "Adding right" << std::endl;
         qu.push({row, col - 1});
+      }
     }
   }
 
   // return value
   return image;
-}
+};
