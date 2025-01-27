@@ -22,7 +22,7 @@ int main() {
     tr->left->left = new TreeNode(0);
     tr->left->right = new TreeNode(4);
     tr->left->right->left = new TreeNode(3);
-    tr->left->right = new TreeNode(5);
+    tr->left->right->right = new TreeNode(5);
     tr->right = new TreeNode(8);
     tr->right->left = new TreeNode(7);
     tr->right->right = new TreeNode(9);
@@ -41,7 +41,7 @@ int main() {
     tr->left->left = new TreeNode(0);
     tr->left->right = new TreeNode(4);
     tr->left->right->left = new TreeNode(3);
-    tr->left->right = new TreeNode(5);
+    tr->left->right->right = new TreeNode(5);
     tr->right = new TreeNode(8);
     tr->right->left = new TreeNode(7);
     tr->right->right = new TreeNode(9);
@@ -60,7 +60,7 @@ int main() {
     tr->left->left = new TreeNode(0);
     tr->left->right = new TreeNode(4);
     tr->left->right->left = new TreeNode(3);
-    tr->left->right = new TreeNode(5);
+    tr->left->right->right = new TreeNode(5);
     tr->right = new TreeNode(8);
     tr->right->left = new TreeNode(7);
     tr->right->right = new TreeNode(9);
@@ -79,7 +79,7 @@ int main() {
     tr->left->left = new TreeNode(0);
     tr->left->right = new TreeNode(4);
     tr->left->right->left = new TreeNode(3);
-    tr->left->right = new TreeNode(5);
+    tr->left->right->right = new TreeNode(5);
     tr->right = new TreeNode(8);
     tr->right->left = new TreeNode(7);
     tr->right->right = new TreeNode(9);
