@@ -20,8 +20,14 @@ TreeNode *Solution::lowestCommonAncestor(TreeNode *root, TreeNode *p,
   q_parents.push(root);
 
   while (true) {
+    if (p_parents.top() == nullptr) {
+      // This is case where value not in tree.
+      // Note: should be error or exception.
+      return nullptr;
+    }
     // pushing a pointer to node.
     std::cout << "P " << p_parents.top()->val << std::endl;
+
     if (p_parents.top()->val == p->val) {
       break;
     } else if (p_parents.top()->val < p->val) {
@@ -30,6 +36,41 @@ TreeNode *Solution::lowestCommonAncestor(TreeNode *root, TreeNode *p,
       p_parents.push(p_parents.top()->left);
     }
   };
+
+  while (true) {
+    if (q_parents.top() == nullptr) {
+      // This is case where value not in tree.
+      // Note: should be error or exception.
+      return nullptr;
+    }
+    // pushing a pointer to node.
+    std::cout << "Q " << q_parents.top()->val << std::endl;
+
+    if (q_parents.top()->val == q->val) {
+      break;
+    } else if (q_parents.top()->val < q->val) {
+      q_parents.push(q_parents.top()->right);
+    } else {
+      q_parents.push(q_parents.top()->left);
+    }
+  };
+
+  while (p_parents.size() != q_parents.size()) {
+    if (p_parents.size() > q_parents.size()) {
+      p_parents.pop();
+    } else {
+      q_parents.pop();
+    }
+  };
+
+  while (p_parents.size() > 0) {
+    if (p_parents.top()->val == q_parents.top()->val) {
+      return p_parents.top();
+    } else {
+      p_parents.pop();
+      q_parents.pop();
+    }
+  }
 
   std::cout << "Leaving Lowest Common Ancestor Method" << std::endl;
   return nullptr;
