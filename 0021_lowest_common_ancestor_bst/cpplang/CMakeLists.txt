@@ -41,7 +41,8 @@ add_executable(${PROJECT_NAME} tests/main.cpp)
 # PRIVATE = only libraries need headers
 # LINKING
 target_include_directories(quacktests PUBLIC libs/quacktests)
-target_include_directories(quacktests PUBLIC libs/binsearch)
+target_include_directories(binsearch PUBLIC libs/binsearch)
+target_link_libraries(quacktests PUBLIC binsearch)
 target_link_libraries(${PROJECT_NAME} PRIVATE quacktests binsearch)
 
 

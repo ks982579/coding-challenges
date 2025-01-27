@@ -1,9 +1,12 @@
+#pragma once
+#include "bin_search_tree.h"
 #include <exception>
 #include <functional>
 #include <iostream>
 #include <ostream>
 #include <sstream>
 #include <string>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -55,21 +58,44 @@ public:
     tests.push_back({name, std::forward<F>(func)});
   };
 
-  // Templates need definition visible at compile time
-  template <typename T> void assertEqual(const T &expected, const T &actual) {
-    std::cout << "IS " << expected << " == " << actual << " ??" << std::endl;
-    if (expected != actual) {
-      throw std::runtime_error("\nExpected: " + std::to_string(expected) +
-                               "\nGot: " + std::to_string(actual));
-    }
-  };
-
   void assertEqual(const Image &expected, const Image &actual) {
     std::cout << "IS " << expected << " == " << actual << " ??" << std::endl;
     if (expected != actual) {
       std::stringstream ss;
       ss << "\nExpected: " << expected << "\nGot: " << actual;
       throw std::runtime_error(ss.str());
+    }
+  };
+
+  void assertEqual(const TreeNode *expected, const TreeNode *actual) {
+    if (expected == nullptr && actual == nullptr) {
+      std::cout << "Both are null pointers" << std::endl;
+      return;
+    } else if (expected == nullptr || actual == nullptr) {
+      std::stringstream ss;
+      ss << "Something is null";
+      // ss << "\nExpected: " << expected->val << "\nGot: " << actual->val;
+      throw std::runtime_error(ss.str());
+    }
+    std::cout << "IS " << expected->val << " == " << actual->val << " ??"
+              << std::endl;
+    if (expected->val != actual->val) {
+      std::stringstream ss;
+      ss << "\nExpected: " << expected->val << "\nGot: " << actual->val;
+      throw std::runtime_error(ss.str());
+    }
+  };
+
+  // Templates need definition visible at compile time
+  // The template was handling pointers to TreeNode, so removing pointer
+  // handling capabilities.
+  template <typename T>
+  std::enable_if_t<!std::is_pointer_v<T>> assertEqual(const T &expected,
+                                                      const T &actual) {
+    std::cout << "IS " << expected << " == " << actual << " ??" << std::endl;
+    if (expected != actual) {
+      throw std::runtime_error("\nExpected: " + std::to_string(expected) +
+                               "\nGot: " + std::to_string(actual));
     }
   };
 

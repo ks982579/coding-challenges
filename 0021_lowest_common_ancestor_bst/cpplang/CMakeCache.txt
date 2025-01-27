@@ -218,6 +218,9 @@ lcabsttest_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 lcabsttest_SOURCE_DIR:STATIC=/home/ksull18/code/coding-challenges/0021_lowest_common_ancestor_bst/cpplang
 
+//Dependencies for the target
+quacktests_LIB_DEPENDS:STATIC=general;binsearch;
+
 
 ########################
 # INTERNAL cache entries
