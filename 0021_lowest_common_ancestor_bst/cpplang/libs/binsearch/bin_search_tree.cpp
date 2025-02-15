@@ -1,8 +1,11 @@
 #include "bin_search_tree.h"
 #include <iostream>
-#include <queue>
 #include <stack>
-#include <utility>
+
+/* Note: Simpler solution would be to work your way down
+ *   and just return the point of divergence.
+ *   It is a fun property of binary trees.
+ */
 
 TreeNode *Solution::lowestCommonAncestor(TreeNode *root, TreeNode *p,
                                          TreeNode *q) {

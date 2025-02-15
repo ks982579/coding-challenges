@@ -1,5 +1,4 @@
 #pragma once
-// #include <ostream>
 #include <vector>
 
 using Image = std::vector<std::vector<int>>;

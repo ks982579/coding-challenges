@@ -1,11 +1,9 @@
 #include "bin_search_tree.h"
 #include "testframework.h"
 #include <iostream>
-#include <vector>
 
 int main() {
   std::cout << "Testing ..." << std::endl;
-  // using Image = std::vector<std::vector<int>>;
   TestFramework tf;
 
   tf.addTest("Handles null pointers", [&tf]() -> void {
